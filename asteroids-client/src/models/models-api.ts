@@ -1,38 +1,38 @@
-export interface Response {
+export interface ResponseAPI {
   element_count: number
-  links: RootObjectLinks
-  near_earth_objects: Record<string, Asteroid[]>
+  links: RootObjectLinksAPI
+  near_earth_objects: Record<string, AsteroidAPI[]>
 }
 
-export interface RootObjectLinks {
+export interface RootObjectLinksAPI {
   next: string
   previous: string
   self: string
 }
 
-export interface Asteroid {
+export interface AsteroidAPI {
   absolute_magnitude_h: number
-  close_approach_data: CloseApproachDatum[]
-  estimated_diameter: EstimatedDiameter
+  close_approach_data: CloseApproachDatumAPI[]
+  estimated_diameter: EstimatedDiameterAPI
   id: string
   is_potentially_hazardous_asteroid: boolean
   is_sentry_object: boolean
-  links: NearEarthObjectLinks
+  links: NearEarthObjectLinksAPI
   name: string
   nasa_jpl_url: string
   neo_reference_id: string
 }
 
-export interface CloseApproachDatum {
+export interface CloseApproachDatumAPI {
   close_approach_date: Date
   close_approach_date_full: string
   epoch_date_close_approach: number
-  miss_distance: MissDistance
+  miss_distance: MissDistanceAPI
   orbiting_body: OrbitingBody
-  relative_velocity: RelativeVelocity
+  relative_velocity: RelativeVelocityAPI
 }
 
-export interface MissDistance {
+export interface MissDistanceAPI {
   astronomical: string
   kilometers: string
   lunar: string
@@ -43,24 +43,24 @@ export enum OrbitingBody {
   Earth = 'Earth',
 }
 
-export interface RelativeVelocity {
+export interface RelativeVelocityAPI {
   kilometers_per_hour: string
   kilometers_per_second: string
   miles_per_hour: string
 }
 
-export interface EstimatedDiameter {
-  feet: Feet
-  kilometers: Feet
-  meters: Feet
-  miles: Feet
+export interface EstimatedDiameterAPI {
+  feet: FeetAPI
+  kilometers: FeetAPI
+  meters: FeetAPI
+  miles: FeetAPI
 }
 
-export interface Feet {
+export interface FeetAPI {
   estimated_diameter_max: number
   estimated_diameter_min: number
 }
 
-export interface NearEarthObjectLinks {
+export interface NearEarthObjectLinksAPI {
   self: string
 }

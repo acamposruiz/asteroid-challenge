@@ -1,5 +1,6 @@
 
 import './App.css'
+import AsteroidComponent from './components/asteroid-component'
 import { useAsteroids } from './hooks/useAsteroids'
 
 const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
@@ -17,10 +18,7 @@ function App () {
       <ul>
         {asteroids.map((asteroid) => (
           <li key={asteroid.id}>
-            <h2>{asteroid.name}</h2>
-            <p>Estimated diameter: {asteroid.estimated_diameter.meters.estimated_diameter_min} meters</p>
-            <p>Potentially hazardous: {asteroid.is_potentially_hazardous_asteroid ? 'yes' : 'no'}</p>
-            <p>Link: {asteroid.nasa_jpl_url}</p>
+            <AsteroidComponent {...asteroid} />
           </li>
         ))}
       </ul>
