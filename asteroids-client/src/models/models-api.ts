@@ -64,3 +64,10 @@ export interface FeetAPI {
 export interface NearEarthObjectLinksAPI {
   self: string
 }
+
+export interface ResponseErrorAPI {
+  code: number
+  error_message: string
+  http_error: string
+  request: string
+}

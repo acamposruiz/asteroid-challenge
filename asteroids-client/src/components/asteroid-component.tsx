@@ -1,6 +1,6 @@
 import { type AsteroidModel } from '../models/models-app'
 
-function AsteroidComponent ({
+export function AsteroidComponent ({
   name,
   estimatedDiameter,
   isPotentiallyHazardousAsteroid,
@@ -17,5 +17,3 @@ function AsteroidComponent ({
     </div>
   )
 }
-
-export default AsteroidComponent
