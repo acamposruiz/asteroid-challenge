@@ -1,0 +1,10 @@
+{
+  "name": "asteroids-tech-challenge",
+  "version": "1.0.0",
+  "description": "Full-stack application for a tech challenge about asteroids",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonio Campos",
+  "license": "ISC"
+}
