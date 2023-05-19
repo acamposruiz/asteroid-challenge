@@ -35,7 +35,9 @@ function App () {
         {asteroids.map((asteroid) => (
           <li key={asteroid.id}>
             <h2>{asteroid.name}</h2>
-            <p>{asteroid.nasa_jpl_url}</p>
+            <p>Estimated diameter: {asteroid.estimated_diameter.meters.estimated_diameter_min} meters</p>
+            <p>Potentially hazardous: {asteroid.is_potentially_hazardous_asteroid ? 'yes' : 'no'}</p>
+            <p>Link: {asteroid.nasa_jpl_url}</p>
           </li>
         ))}
       </ul>
