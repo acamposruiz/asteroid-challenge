@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { type ResponseErrorAPI, type ResponseAPI } from '../models/models-api'
-import { type AsteroidModel } from '../models/models-app'
 import { asteroidsMapper } from '../mappers/asteroids-mapper'
+import { useAsteroidsContext } from '../providers/asteroids-provider'
 
 export function useAsteroids (
   apiKey: string,
   startDate: string,
   endDate: string
 ) {
-  const [asteroids, setAsteroids] = useState<AsteroidModel[]>([])
+  const { asteroids, setAsteroids } = useAsteroidsContext()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`
