@@ -15,7 +15,9 @@ function App () {
         const response = await fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=' + API_KEY)
         const data: Response = await response.json()
         setAsteroids(Object.values(data.near_earth_objects)[0])
+        setError(null)
       } catch (error: Error | any) {
+        setAsteroids([])
         setError(error)
       } finally {
         setLoading(false)
