@@ -2,12 +2,12 @@ import './App.css'
 import { AsteroidComponent } from './components/asteroid-component'
 import { IntervalRangeComponent } from './components/interval-range-component'
 import { useAsteroids } from './hooks/useAsteroids'
-import useDates from './hooks/useDates'
+import { useDatesContext } from './providers/dates-provide'
 
 const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
 
 function App () {
-  const { initDate, endDate, setInitDate, setEndDate } = useDates()
+  const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
   const { asteroids, loading, error } = useAsteroids(API_KEY, initDate, endDate)
 
   if (loading) {
@@ -29,7 +29,7 @@ function App () {
         }}
       />
       <ul>
-        {asteroids.map((asteroid) => (
+        {asteroids?.map((asteroid) => (
           <li key={asteroid.id}>
             <AsteroidComponent {...asteroid} />
           </li>
