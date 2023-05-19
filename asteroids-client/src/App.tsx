@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { type Asteroid, type Response } from './models'
 
+const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
 function App () {
   const [asteroids, setAsteroids] = useState<Asteroid[]>([])
   const [loading, setLoading] = useState(false)
@@ -11,7 +12,7 @@ function App () {
     setLoading(true)
     const fetchAsteroids = async () => {
       try {
-        const response = await fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY')
+        const response = await fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=' + API_KEY)
         const data: Response = await response.json()
         setAsteroids(Object.values(data.near_earth_objects)[0])
       } catch (error: Error | any) {
