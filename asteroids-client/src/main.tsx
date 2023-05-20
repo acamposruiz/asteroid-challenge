@@ -6,6 +6,7 @@ import './index.css'
 import { AsteroidsProvider } from './providers/asteroids-provider.tsx'
 import { AsteroidDetailComponent } from './components/asteroid-detail-component.tsx'
 import { DatesProvider } from './providers/dates-provide.tsx'
+import { SortProvider } from './providers/sort-provide.tsx'
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AsteroidsProvider>
       <DatesProvider>
-        <RouterProvider router={router} />
+        <SortProvider>
+          <RouterProvider router={router} />
+        </SortProvider>
       </DatesProvider>
     </AsteroidsProvider>
   </React.StrictMode>

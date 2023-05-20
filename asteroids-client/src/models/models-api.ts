@@ -24,7 +24,7 @@ export interface AsteroidAPI {
 }
 
 export interface CloseApproachDatumAPI {
-  close_approach_date: Date
+  close_approach_date: string
   close_approach_date_full: string
   epoch_date_close_approach: number
   miss_distance: MissDistanceAPI

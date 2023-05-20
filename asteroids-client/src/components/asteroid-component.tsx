@@ -6,6 +6,7 @@ import {
 export function AsteroidComponent ({
   id: asteroidId,
   name,
+  date,
   estimatedDiameter,
   isPotentiallyHazardousAsteroid,
   jplUrl
@@ -14,6 +15,7 @@ export function AsteroidComponent ({
   return (
     <div>
       <h2><Link to={asteroidPath}>{name}</Link></h2>
+      <p>Date: {date}</p>
       <p>Estimated diameter: {estimatedDiameter} meters</p>
       <p>
         Potentially hazardous: {isPotentiallyHazardousAsteroid ? 'yes' : 'no'}

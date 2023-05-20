@@ -21,7 +21,8 @@ export function useAsteroids (
         if (!response.ok) {
           throw new Error((data as ResponseErrorAPI).error_message)
         }
-        setAsteroids(asteroidsMapper(Object.values((data as ResponseAPI).near_earth_objects)[0]))
+        const asteroidsRawFlatted = Object.values((data as ResponseAPI).near_earth_objects).flat()
+        setAsteroids(asteroidsMapper(asteroidsRawFlatted))
         setError(null)
       } catch (error: Error | any) {
         setAsteroids([])

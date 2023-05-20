@@ -10,8 +10,8 @@ const datesContext = createContext<{
 export const DatesProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [initDate, setInitDate] = useState('2021-08-01')
-  const [endDate, setEndDate] = useState('2021-08-07')
+  const [initDate, setInitDate] = useState('2015-09-07')
+  const [endDate, setEndDate] = useState('2015-09-13')
   return (
         <datesContext.Provider value={{ initDate, endDate, setInitDate, setEndDate }}>
             {children}

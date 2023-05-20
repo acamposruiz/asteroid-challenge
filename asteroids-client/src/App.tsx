@@ -1,14 +1,32 @@
 import './App.css'
 import { AsteroidComponent } from './components/asteroid-component'
 import { IntervalRangeComponent } from './components/interval-range-component'
+import { SortComponent } from './components/sort-component'
 import { useAsteroids } from './hooks/useAsteroids'
+import { type AsteroidModel } from './models/models-app'
 import { useDatesContext } from './providers/dates-provide'
+import { useSortContext } from './providers/sort-provide'
 
 const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
 
 function App () {
   const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
   const { asteroids, loading, error } = useAsteroids(API_KEY, initDate, endDate)
+  const { sort } = useSortContext()
+
+  // sortAsteroids is a function that takes an array of AsteroidModel and returns an array of AsteroidModel sortied by the sort key
+  const sortAsteroids = (a: AsteroidModel, b: AsteroidModel) => {
+    if (sort == null) {
+      return 0
+    }
+    if (a[sort] < b[sort]) {
+      return -1
+    }
+    if (a[sort] > b[sort]) {
+      return 1
+    }
+    return 0
+  }
 
   if (loading) {
     return <div>Loading...</div>
@@ -28,8 +46,9 @@ function App () {
           setEndDate(date)
         }}
       />
+      <SortComponent />
       <ul>
-        {asteroids?.map((asteroid) => (
+        {asteroids?.sort(sortAsteroids).map((asteroid) => (
           <li key={asteroid.id}>
             <AsteroidComponent {...asteroid} />
           </li>

@@ -14,12 +14,13 @@ export interface AsteroidModel {
   id: string
   name: string
   estimatedDiameter: number
+  date: string
   isPotentiallyHazardousAsteroid: boolean
   jplUrl: string
 }
 
 export interface CloseApproachDatumModel {
-  closeApproachDate: Date
+  closeApproachDate: string
   closeApproachDateFull: string
   epochDateCloseApproach: number
   missDistance: MissDistanceModel
