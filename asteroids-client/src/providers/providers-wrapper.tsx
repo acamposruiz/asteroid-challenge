@@ -6,14 +6,12 @@ import { FavoritesProvider } from '../providers/favorites-provider.tsx'
 
 export const ProvidersWrapper = ({ children }: { children: ReactNode }) => {
   return (
-    <AsteroidsProvider>
-      <DatesProvider>
-        <SortProvider>
-          <FavoritesProvider>
-            {children}
-          </FavoritesProvider>
-        </SortProvider>
-      </DatesProvider>
-    </AsteroidsProvider>
+    <DatesProvider>
+      <FavoritesProvider>
+        <AsteroidsProvider>
+          <SortProvider>{children}</SortProvider>
+        </AsteroidsProvider>
+      </FavoritesProvider>
+    </DatesProvider>
   )
 }

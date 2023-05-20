@@ -3,16 +3,14 @@ import './App.css'
 import { AsteroidComponent } from './components/asteroid-component'
 import { IntervalRangeComponent } from './components/interval-range-component'
 import { SortComponent } from './components/sort-component'
-import { useAsteroids } from './hooks/useAsteroids'
 import { useDatesContext } from './providers/dates-provide'
 import { useSortContext } from './providers/sort-provide'
 import { sortAsteroids } from './utils/sort-asteroids'
-
-const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
+import { useAsteroidsContext } from './providers/asteroids-provider'
 
 function App () {
   const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
-  const { asteroids, loading, error } = useAsteroids(API_KEY, initDate, endDate)
+  const { asteroids, loading, error } = useAsteroidsContext()
   const { sort } = useSortContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 
