@@ -19,6 +19,7 @@ export function SortComponent () {
           <option value="name">Name</option>
           <option value="date">Date</option>
           <option value="estimatedDiameter">Estimated diameter</option>
+          <option value="isPotentiallyHazardousAsteroid" >Dangerousness</option>
         </select>
       </label>
       <label>
