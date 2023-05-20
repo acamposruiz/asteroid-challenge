@@ -1,6 +1,9 @@
+const express = require('express');
 const http = require('http');
 
-const forwardRequestToAPI = (request, response) => {
+const app = express();
+
+app.all('*', (request, response) => {
     const options = {
         hostname: 'api.nasa.gov',
         port: 80,
@@ -19,7 +22,6 @@ const forwardRequestToAPI = (request, response) => {
 
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.writeHead(res.statusCode, res.headers);
-
     });
 
     request.on('data', (chunk) => {
@@ -33,17 +35,10 @@ const forwardRequestToAPI = (request, response) => {
     proxy.on('error', (err) => {
         console.log('Error: ', err);
     });
-
-};
-
-
-const app = http.createServer(forwardRequestToAPI);
-
+});
 
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
-    }
-);
-
+});
