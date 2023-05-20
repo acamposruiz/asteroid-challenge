@@ -45,10 +45,22 @@ export const useFavoritesContext = () => {
     if (favorites == null) {
       return
     }
-    const newFavorites = favorites.includes(id)
-      ? favorites.filter((favorite) => favorite !== id)
-      : [...favorites, id]
-    setFavorites(newFavorites)
+    const isFavorite = favorites.includes(id)
+    const method = isFavorite ? 'DELETE' : 'POST'
+    const url = `http://localhost:3001/favorites/${id}`
+    const fetchFavorite = async () => {
+      try {
+        const response = await fetch(url, { method })
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.error_message)
+        }
+        setFavorites(data)
+      } catch (error: Error | any) {
+        setFavorites([])
+      }
+    }
+    void fetchFavorite()
   }
 
   return { favorites, toggleFavorite }
