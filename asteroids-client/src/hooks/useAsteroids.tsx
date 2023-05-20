@@ -11,7 +11,7 @@ export function useAsteroids (
   const { asteroids, setAsteroids } = useAsteroidsContext()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
-  const url = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`
+  const url = `http://localhost:3001/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${apiKey}`
   useEffect(() => {
     setLoading(true)
     const fetchAsteroids = async () => {
