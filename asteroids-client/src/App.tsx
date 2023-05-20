@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import './App.css'
 import { AsteroidComponent } from './components/asteroid-component'
 import { IntervalRangeComponent } from './components/interval-range-component'
@@ -7,8 +7,11 @@ import { useDatesContext } from './providers/dates-provide'
 import { useSortContext } from './providers/sort-provide'
 import { sortAsteroids } from './utils/sort-asteroids'
 import { useAsteroidsContext } from './providers/asteroids-provider'
+import { useFavoritesContext } from './providers/favorites-provider'
 
 function App () {
+  const [showFavorites, setShowFavorites] = useState<boolean>(false)
+  const { favorites } = useFavoritesContext()
   const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
   const { asteroids, loading, error } = useAsteroidsContext()
   const { sort } = useSortContext()
@@ -18,9 +21,27 @@ function App () {
     return <div>Loading...</div>
   }
 
+  const filteredAsteroids =
+    favorites != null && showFavorites
+      ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
+      : asteroids
+
+  const sortedFavorites = filteredAsteroids?.sort(sortContent)
+
   return (
     <div className="App">
-      <h1>Asteroids</h1>
+      <h1>
+        Asteroids{' '}
+        <small>
+          <button
+            onClick={() => {
+              setShowFavorites(!showFavorites)
+            }}
+          >
+            {showFavorites ? '❤️' : '🤍'}
+          </button>
+        </small>
+      </h1>
       {error != null && <h3 className="error-message">{error.message}</h3>}
       <IntervalRangeComponent
         initDate={initDate}
@@ -33,14 +54,17 @@ function App () {
         }}
       />
       <SortComponent />
-      {(asteroids != null) && asteroids.length > 0 && <ul>
-        {[...asteroids].sort(sortContent).map((asteroid) => (
-          <li key={asteroid.id}>
-            <AsteroidComponent {...asteroid} />
-          </li>
-        ))}
-      </ul>}
-
+      {sortedFavorites != null && sortedFavorites.length > 0
+        ? (
+        <ul>
+          {sortedFavorites.map((asteroid) => (
+            <li key={asteroid.id}>
+              <AsteroidComponent {...asteroid} />
+            </li>
+          ))}
+        </ul>
+          )
+        : showFavorites ? <p>No favorites</p> : <p>No asteroids</p> }
     </div>
   )
 }

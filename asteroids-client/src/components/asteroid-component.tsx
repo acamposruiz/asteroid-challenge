@@ -2,6 +2,7 @@ import { type AsteroidModel } from '../models/models-app'
 import {
   Link
 } from 'react-router-dom'
+import { ToggleFavoriteComponent } from './toggle-favorite-component'
 
 export function AsteroidComponent ({
   id: asteroidId,
@@ -15,6 +16,7 @@ export function AsteroidComponent ({
   return (
     <div>
       <h2><Link to={asteroidPath}>{name}</Link></h2>
+      <ToggleFavoriteComponent asteroidId={asteroidId} />
       <p>Date: {date}</p>
       <p>Estimated diameter: {estimatedDiameter} meters</p>
       <p>
