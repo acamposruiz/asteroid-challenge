@@ -14,16 +14,16 @@ function App () {
   const { asteroids, loading, error } = useAsteroids(API_KEY, initDate, endDate)
   const { sort } = useSortContext()
 
-  // sortAsteroids is a function that takes an array of AsteroidModel and returns an array of AsteroidModel sortied by the sort key
   const sortAsteroids = (a: AsteroidModel, b: AsteroidModel) => {
     if (sort == null) {
       return 0
     }
-    if (a[sort] < b[sort]) {
-      return -1
+    const [sortKey, sortAsc] = sort
+    if (a[sortKey] < b[sortKey]) {
+      return sortAsc ? -1 : 1
     }
-    if (a[sort] > b[sort]) {
-      return 1
+    if (a[sortKey] > b[sortKey]) {
+      return sortAsc ? 1 : -1
     }
     return 0
   }

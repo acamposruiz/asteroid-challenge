@@ -5,22 +5,36 @@ import { useSortContext } from '../providers/sort-provide'
 export function SortComponent () {
   const { sort, setSort } = useSortContext()
   return (
-        <div>
-            <label>
-                Sort by:
-                <select
-                    value={sort ?? 'none'}
-                    onChange={(e) => {
-                      const value = e.target.value
-                      setSort(value === 'none' ? null : value as keyof AsteroidModel)
-                    }}
-                >
-                    <option value="none">None</option>
-                    <option value="name">Name</option>
-                    <option value="date">Date</option>
-                    <option value="estimatedDiameter">Diameter</option>
-                </select>
-            </label>
-        </div>
+    <div>
+      <label>
+        Sort by:
+        <select
+          value={sort?.[0] ?? ''}
+          onChange={(e) => {
+            const sortKey = e.target.value
+            setSort(sortKey === '' ? null : [sortKey as keyof AsteroidModel, true])
+          }}
+        >
+          <option value="">---</option>
+          <option value="name">Name</option>
+          <option value="date">Date</option>
+          <option value="estimatedDiameter">Estimated diameter</option>
+        </select>
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={sort?.[1] ?? false}
+          onChange={(e) => {
+            if (sort == null) {
+              return
+            }
+            const [, sortAsc] = sort
+            setSort([sort[0], !sortAsc])
+          }}
+        />
+        Ascending
+      </label>
+    </div>
   )
 }
