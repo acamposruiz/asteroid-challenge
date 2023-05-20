@@ -1,19 +1,22 @@
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 
 const favorites = [];
 
 app.get('/favorites', (request, response) => {
-    response.setHeader('Access-Control-Allow-Origin', '*');
     response.json(favorites);
 });
 
 app.post('/favorites/:id', (request, response) => {
     const id = request.params.id;
-    favorites.push(id);
-    response.setHeader('Access-Control-Allow-Origin', '*');
+    const index = favorites.indexOf(id);
+    if (index === -1) {
+        favorites.push(id);
+    }
     response.json(favorites);
 });
 
@@ -23,7 +26,6 @@ app.delete('/favorites/:id', (request, response) => {
     if (index > -1) {
         favorites.splice(index, 1);
     }
-    response.setHeader('Access-Control-Allow-Origin', '*');
     response.json(favorites);
 });
 
@@ -61,7 +63,6 @@ app.get('/neo/rest/v1/feed', (request, response) => {
     proxy.on('error', (err) => {
         console.log('Error: ', err);
     });
-    
 });
 
 const PORT = process.env.PORT || 3001;
@@ -69,5 +70,3 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-
