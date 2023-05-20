@@ -1,0 +1,26 @@
+# Node.js
+node_modules/
+
+# Archivos generados por el entorno de desarrollo
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnp/
+.pnp.js
+
+# Archivos y directorios específicos de Express
+dist/
+build/
+
+# Archivos específicos de MongoDB
+*.log
+*.log.*
+
+# Otros archivos y directorios generados por herramientas de desarrollo
+logs/
+*.swp
+*.swo
+.vscode/
+.idea/
+*.sublime-*
