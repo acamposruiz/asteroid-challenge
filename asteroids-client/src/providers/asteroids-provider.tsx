@@ -3,8 +3,7 @@ import { type AsteroidModel } from '../models/models-app'
 import { useDatesContext } from './dates-provide'
 import { type ResponseAPI, type ResponseErrorAPI } from '../models/models-api'
 import { asteroidsMapper } from '../mappers/asteroids-mapper'
-
-const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
+import { API_KEY, endpoints, urlConstructor } from '../utils/endpoints'
 
 const asteroidsContext = createContext<{
   asteroids: AsteroidModel[] | null
@@ -24,9 +23,12 @@ export const AsteroidsProvider = ({ children }: {
     start_date: initDate,
     end_date: endDate,
     api_key: API_KEY
-  }).toString()
+  })
 
-  const url = `http://localhost:3001/asteroids-api?${queryString}`
+  const url = urlConstructor({
+    endpoint: endpoints.ASTEROIDS,
+    search: queryString
+  })
 
   const fetchAsteroids = async () => {
     try {

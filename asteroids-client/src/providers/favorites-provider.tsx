@@ -1,4 +1,5 @@
 import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
+import { endpoints, urlConstructor } from '../utils/endpoints'
 
 const favoritesContext = createContext<{
   favorites: string[] | null
@@ -9,7 +10,9 @@ export const FavoritesProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [favorites, setFavorites] = useState<string[] | null>([])
-  const url = 'http://localhost:3001/favorites'
+  const url = urlConstructor({
+    endpoint: endpoints.FAVORITES
+  })
   const fetchFavorites = async () => {
     try {
       const response = await fetch(url)
@@ -47,7 +50,10 @@ export const useFavoritesContext = () => {
     }
     const isFavorite = favorites.includes(id)
     const method = isFavorite ? 'DELETE' : 'POST'
-    const url = `http://localhost:3001/favorites/${id}`
+    const url = urlConstructor({
+      endpoint: endpoints.FAVORITES,
+      params: [id]
+    })
     const fetchFavorite = async () => {
       try {
         const response = await fetch(url, { method })
