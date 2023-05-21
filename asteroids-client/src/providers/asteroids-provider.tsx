@@ -1,22 +1,23 @@
-import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
-import { type AsteroidModel } from '../models/search-models-app'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { createContext, useState, useContext, useEffect, type ReactNode } from 'react'
 import { useDatesContext } from './dates-provide'
-import { type ResponseSearchAPI } from '../models/search-models-api'
 import { asteroidDetailMapper, asteroidsSearchMapper } from '../mappers/asteroids-mapper'
 import { API_KEY, endpoints, urlConstructor } from '../utils/endpoints'
 import { httpService } from '../utils/http-service'
+import { type ResponseSearchAPI, type AsteroidAPI } from '../models/search-models-api'
+import { type AsteroidModel } from '../models/search-models-app'
 
-const asteroidsContext = createContext<{
+interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
   fetchAsteroidDetail: (id: string) => void
   loading: boolean
   error: Error | null
-} | null>(null)
+}
 
-export const AsteroidsProvider = ({ children }: {
-  children: ReactNode
-}) => {
-  const [asteroids, setAsteroids] = useState<AsteroidModel[] | null>([])
+const asteroidsContext = createContext<AsteroidsContextProps | null>(null)
+
+export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
+  const [asteroids, setAsteroids] = useState<AsteroidModel[] | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const { initDate, endDate } = useDatesContext()
@@ -32,9 +33,11 @@ export const AsteroidsProvider = ({ children }: {
       endpoint: endpoints.ASTEROIDS_SEARCH,
       search: queryStringSearchAPI
     })
+
     try {
+      setLoading(true)
       const data = await httpService.get(urlSearchAPI)
-      const asteroidsRawFlatted = Object.values((data as ResponseSearchAPI).near_earth_objects).flat()
+      const asteroidsRawFlatted: AsteroidAPI[] = Object.values((data as ResponseSearchAPI).near_earth_objects).flat()
       setAsteroids(asteroidsSearchMapper(asteroidsRawFlatted))
       setError(null)
     } catch (error: Error | any) {
@@ -55,6 +58,7 @@ export const AsteroidsProvider = ({ children }: {
       params: [id],
       search: queryStringDetailAPI
     })
+
     try {
       setLoading(true)
       const data = await httpService.get(urlDetailAPI)
@@ -85,17 +89,16 @@ export const AsteroidsProvider = ({ children }: {
   }, [initDate, endDate])
 
   return (
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loading, error }}>
-            {children}
-        </asteroidsContext.Provider>
+    <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loading, error }}>
+      {children}
+    </asteroidsContext.Provider>
   )
 }
 
-export const useAsteroidsContext = () => {
+export const useAsteroidsContext = (): AsteroidsContextProps => {
   const context = useContext(asteroidsContext)
   if (context == null) {
-    throw new Error('useAsteroidsContext must be used within a asteroidsProvider')
+    throw new Error('useAsteroidsContext must be used within an AsteroidsProvider')
   }
   return context
 }
