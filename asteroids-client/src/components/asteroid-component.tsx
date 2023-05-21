@@ -15,8 +15,7 @@ export function AsteroidComponent ({
   const asteroidPath = `/asteroid/${asteroidId}`
   return (
     <div>
-      <h2><Link to={asteroidPath}>{name}</Link></h2>
-      <ToggleFavoriteComponent asteroidId={asteroidId} />
+      <h2><Link to={asteroidPath}>{name}</Link> <small><ToggleFavoriteComponent asteroidId={asteroidId} /></small></h2>
       <p>Date: {date}</p>
       <p>Estimated diameter: {estimatedDiameter} meters</p>
       <p>

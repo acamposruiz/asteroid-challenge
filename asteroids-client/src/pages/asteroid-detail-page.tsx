@@ -2,6 +2,7 @@
 import { type AsteroidModel } from '../models/search-models-app'
 import { Link, useParams } from 'react-router-dom'
 import { useAsteroidsContext } from '../providers/asteroids-provider'
+import { ToggleFavoriteComponent } from '../components/toggle-favorite-component'
 
 export function AsteroidDetailPage () {
   const { asteroidId } = useParams()
@@ -14,7 +15,7 @@ export function AsteroidDetailPage () {
     fetchAsteroidDetail(asteroidId)
   }
 
-  if (asteroid == null) {
+  if (asteroid == null || asteroidId === undefined) {
     return (
       <div>
         <Link to="/">Back to home</Link>
@@ -29,7 +30,8 @@ export function AsteroidDetailPage () {
     <div>
       <Link to="/">Back to home</Link>
       {errorDetail != null && <h3 className="error-message">{errorDetail.message}</h3>}
-      <h1>{name}</h1>
+
+      <h1>{name} <small><ToggleFavoriteComponent asteroidId={asteroidId} /></small></h1>
       <p>Estimated diameter: {estimatedDiameter} meters</p>
       <p>
         {isPotentiallyHazardousAsteroid
