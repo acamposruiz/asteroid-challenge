@@ -1,9 +1,10 @@
 import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
 import { type AsteroidModel } from '../models/models-app'
 import { useDatesContext } from './dates-provide'
-import { type ResponseAPI, type ResponseErrorAPI } from '../models/models-api'
+import { type ResponseAPI } from '../models/models-api'
 import { asteroidsMapper } from '../mappers/asteroids-mapper'
 import { API_KEY, endpoints, urlConstructor } from '../utils/endpoints'
+import { httpService } from '../utils/http-service'
 
 const asteroidsContext = createContext<{
   asteroids: AsteroidModel[] | null
@@ -32,17 +33,13 @@ export const AsteroidsProvider = ({ children }: {
 
   const fetchAsteroids = async () => {
     try {
-      const response = await fetch(url)
-      const data: ResponseAPI | ResponseErrorAPI = await response.json()
-      if (!response.ok) {
-        throw new Error((data as ResponseErrorAPI).error_message)
-      }
+      const data = await httpService.get(url)
       const asteroidsRawFlatted = Object.values((data as ResponseAPI).near_earth_objects).flat()
       setAsteroids(asteroidsMapper(asteroidsRawFlatted))
       setError(null)
     } catch (error: Error | any) {
-      setAsteroids([])
       setError(error)
+      setAsteroids([])
     } finally {
       setLoading(false)
     }

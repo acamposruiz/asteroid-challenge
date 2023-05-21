@@ -1,5 +1,6 @@
 import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
 import { endpoints, urlConstructor } from '../utils/endpoints'
+import { httpService } from '../utils/http-service'
 
 const favoritesContext = createContext<{
   favorites: string[] | null
@@ -15,11 +16,7 @@ export const FavoritesProvider = ({ children }: {
   })
   const fetchFavorites = async () => {
     try {
-      const response = await fetch(url)
-      const data = await response.json()
-      if (!response.ok) {
-        throw new Error(data.error_message)
-      }
+      const data = await httpService.get(url)
       setFavorites(data)
     } catch (error: Error | any) {
       setFavorites([])
@@ -49,18 +46,14 @@ export const useFavoritesContext = () => {
       return
     }
     const isFavorite = favorites.includes(id)
-    const method = isFavorite ? 'DELETE' : 'POST'
+    const method = isFavorite ? 'delete' : 'post'
     const url = urlConstructor({
       endpoint: endpoints.FAVORITES,
       params: [id]
     })
     const fetchFavorite = async () => {
       try {
-        const response = await fetch(url, { method })
-        const data = await response.json()
-        if (!response.ok) {
-          throw new Error(data.error_message)
-        }
+        const data = await httpService[method](url)
         setFavorites(data)
       } catch (error: Error | any) {
         setFavorites([])
