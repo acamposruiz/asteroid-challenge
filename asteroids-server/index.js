@@ -1,32 +1,60 @@
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
+const { AsteroidsFavoriteModel } = require('./mongo')
 
 const app = express()
 app.use(cors())
 
-const favorites = []
-
-app.get('/favorites', (request, response) => {
-  response.json(favorites)
+app.get('/favorites', async (request, response) => {
+  try {
+    const result = await AsteroidsFavoriteModel.find({})
+    const favorites = result.map((asteroid) => asteroid.value)
+    response.json(favorites)
+  } catch (err) {
+    console.log('Error fetching favorites:', err)
+    response.status(500).json({ error: 'Internal Server Error' })
+  }
 })
 
-app.post('/favorites/:id', (request, response) => {
-  const id = request.params.id
-  const index = favorites.indexOf(id)
-  if (index === -1) {
-    favorites.push(id)
+app.post('/favorites/:id', async (request, response) => {
+  const value = request.params.id
+  try {
+    const result = await AsteroidsFavoriteModel.find({})
+    const found = result.some((asteroid) => asteroid.value === value)
+
+    if (!found) {
+      const asteroidFavorite = new AsteroidsFavoriteModel({ value })
+      const newFavorite = await asteroidFavorite.save()
+      console.log('asteroidFavorite saved!')
+      console.log(newFavorite)
+
+      result.push(newFavorite)
+      const favorites = result.map((asteroid) => asteroid.value)
+      response.json(favorites)
+    } else {
+      response.status(400).json({ error: 'Asteroid already favorited' })
+    }
+  } catch (err) {
+    console.log('Error saving asteroidFavorite:', err)
+    response.status(500).json({ error: 'Internal Server Error' })
   }
-  response.json(favorites)
 })
 
-app.delete('/favorites/:id', (request, response) => {
-  const id = request.params.id
-  const index = favorites.indexOf(id)
-  if (index > -1) {
-    favorites.splice(index, 1)
+app.delete('/favorites/:id', async (request, response) => {
+  const value = request.params.id
+  try {
+    const result = await AsteroidsFavoriteModel.findOneAndDelete({ value })
+    console.log('asteroidFavorite deleted!')
+    console.log(result)
+
+    const favoritesResult = await AsteroidsFavoriteModel.find({})
+    const favorites = favoritesResult.map((asteroid) => asteroid.value)
+    response.json(favorites)
+  } catch (err) {
+    console.log('Error deleting asteroidFavorite:', err)
+    response.status(500).json({ error: 'Internal Server Error' })
   }
-  response.json(favorites)
 })
 
 app.get('/neo/rest/v1/feed', (request, response) => {
@@ -36,6 +64,7 @@ app.get('/neo/rest/v1/feed', (request, response) => {
     path: request.url,
     method: request.method
   }
+
   response.setHeader('Access-Control-Allow-Origin', '*')
 
   const proxy = http.request(options, (res) => {
@@ -59,7 +88,7 @@ app.get('/neo/rest/v1/feed', (request, response) => {
   })
 
   proxy.on('error', (err) => {
-    console.log('Error: ', err)
+    console.log('Error:', err)
   })
 })
 
