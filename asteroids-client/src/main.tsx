@@ -1,26 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App.tsx'
 import './index.css'
-import { AsteroidDetailComponent } from './components/asteroid-detail-component.tsx'
 import { WrapperProvider } from './providers/wrapper-provider.tsx'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />
-  },
-  {
-    path: 'asteroid/:asteroidId',
-    element: <AsteroidDetailComponent />
-  }
-])
+import { Router } from './router.tsx'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <WrapperProvider>
-      <RouterProvider router={router} />
+      <Router />
     </WrapperProvider>
   </React.StrictMode>
 )
