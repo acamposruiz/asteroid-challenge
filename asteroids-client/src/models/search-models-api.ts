@@ -1,4 +1,4 @@
-export interface ResponseAPI {
+export interface ResponseSearchAPI {
   element_count: number
   links: RootObjectLinksAPI
   near_earth_objects: Record<string, AsteroidAPI[]>
@@ -11,14 +11,14 @@ export interface RootObjectLinksAPI {
 }
 
 export interface AsteroidAPI {
+  id: string
+  name: string
+  links: NearEarthObjectLinksAPI
   absolute_magnitude_h: number
   close_approach_data: CloseApproachDatumAPI[]
   estimated_diameter: EstimatedDiameterAPI
-  id: string
   is_potentially_hazardous_asteroid: boolean
   is_sentry_object: boolean
-  links: NearEarthObjectLinksAPI
-  name: string
   nasa_jpl_url: string
   neo_reference_id: string
 }

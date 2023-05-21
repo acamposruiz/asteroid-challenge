@@ -1,5 +1,5 @@
 
-import { type AsteroidModel } from '../models/models-app'
+import { type AsteroidModel } from '../models/search-models-app'
 
 export const sortAsteroids = (sort: [keyof AsteroidModel, boolean] | null) => (a: AsteroidModel, b: AsteroidModel) => {
   if (sort == null) {

@@ -1,4 +1,4 @@
-import { type AsteroidModel } from '../models/models-app'
+import { type AsteroidModel } from '../models/search-models-app'
 import {
   Link
 } from 'react-router-dom'

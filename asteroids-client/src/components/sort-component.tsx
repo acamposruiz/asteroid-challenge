@@ -1,5 +1,5 @@
 
-import { type AsteroidModel } from '../models/models-app'
+import { type AsteroidModel } from '../models/search-models-app'
 import { useSortContext } from '../providers/sort-provide'
 
 export function SortComponent () {

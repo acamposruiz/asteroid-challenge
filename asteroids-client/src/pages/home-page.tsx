@@ -16,10 +16,6 @@ export function HomePage () {
   const { sort } = useSortContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
   const filteredAsteroids =
     favorites != null && showFavorites
       ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
@@ -53,8 +49,12 @@ export function HomePage () {
         }}
       />
       <SortComponent />
-      {sortedFavorites != null && sortedFavorites.length > 0
+      {loading
         ? (
+        <div>Loading...</div>
+          )
+        : sortedFavorites != null && sortedFavorites.length > 0
+          ? (
         <ul>
           {sortedFavorites.map((asteroid) => (
             <li key={asteroid.id}>
@@ -62,8 +62,14 @@ export function HomePage () {
             </li>
           ))}
         </ul>
-          )
-        : showFavorites ? <p>No favorites</p> : <p>No asteroids</p> }
+            )
+          : showFavorites
+            ? (
+        <p>No favorites</p>
+              )
+            : (
+        <p>No asteroids</p>
+              )}
     </div>
   )
 }

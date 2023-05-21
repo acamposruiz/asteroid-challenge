@@ -57,7 +57,8 @@ app.delete('/favorites/:id', async (request, response) => {
   }
 })
 
-app.get('/asteroids-api', (request, response) => {
+app.get('/asteroids-api/:type/:id?', (request, response) => {
+  const { type, id } = request.params
   const querystring = new URLSearchParams({
     ...request.query
   }).toString()
@@ -65,9 +66,11 @@ app.get('/asteroids-api', (request, response) => {
   const options = {
     hostname: 'api.nasa.gov',
     port: 80,
-    path: `/neo/rest/v1/feed?${querystring}`,
+    path: `/neo/rest/v1/${type + (id ? `/${id}` : '')}?${querystring}`,
     method: request.method
   }
+
+  console.log({ options })
 
   response.setHeader('Access-Control-Allow-Origin', '*')
 
