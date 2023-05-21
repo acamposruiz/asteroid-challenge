@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 import { AsteroidDetailComponent } from './components/asteroid-detail-component.tsx'
-import { ProvidersWrapper } from './providers/providers-wrapper.tsx'
+import { WrapperProvider } from './providers/wrapper-provider.tsx'
 
 const router = createBrowserRouter([
   {
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ProvidersWrapper>
+    <WrapperProvider>
       <RouterProvider router={router} />
-    </ProvidersWrapper>
+    </WrapperProvider>
   </React.StrictMode>
 )
