@@ -19,7 +19,14 @@ export const AsteroidsProvider = ({ children }: {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
   const { initDate, endDate } = useDatesContext()
-  const url = `http://localhost:3001/neo/rest/v1/feed?start_date=${initDate}&end_date=${endDate}&api_key=${API_KEY}`
+
+  const queryString = new URLSearchParams({
+    start_date: initDate,
+    end_date: endDate,
+    api_key: API_KEY
+  }).toString()
+
+  const url = `http://localhost:3001/asteroids-api?${queryString}`
 
   const fetchAsteroids = async () => {
     try {

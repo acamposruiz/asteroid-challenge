@@ -57,11 +57,15 @@ app.delete('/favorites/:id', async (request, response) => {
   }
 })
 
-app.get('/neo/rest/v1/feed', (request, response) => {
+app.get('/asteroids-api', (request, response) => {
+  const querystring = new URLSearchParams({
+    ...request.query
+  }).toString()
+
   const options = {
     hostname: 'api.nasa.gov',
     port: 80,
-    path: request.url,
+    path: `/neo/rest/v1/feed?${querystring}`,
     method: request.method
   }
 
