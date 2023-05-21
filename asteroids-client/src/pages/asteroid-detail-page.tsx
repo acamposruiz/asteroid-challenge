@@ -5,12 +5,12 @@ import { useAsteroidsContext } from '../providers/asteroids-provider'
 
 export function AsteroidDetailPage () {
   const { asteroidId } = useParams()
-  const { asteroids, fetchAsteroidDetail, loading, error } =
+  const { asteroids, fetchAsteroidDetail, loadingDetail, errorDetail } =
     useAsteroidsContext()
   const asteroid = asteroids?.find(
     (asteroid: AsteroidModel) => asteroid.id === asteroidId
   )
-  if (!loading && asteroidId != null && asteroid?.orbitalData == null) {
+  if (asteroidId != null && asteroid?.orbitalData == null) {
     fetchAsteroidDetail(asteroidId)
   }
 
@@ -28,7 +28,7 @@ export function AsteroidDetailPage () {
   return (
     <div>
       <Link to="/">Back to home</Link>
-      {error != null && <h3 className="error-message">{error.message}</h3>}
+      {errorDetail != null && <h3 className="error-message">{errorDetail.message}</h3>}
       <h1>{name}</h1>
       <p>Estimated diameter: {estimatedDiameter} meters</p>
       <p>
@@ -37,7 +37,7 @@ export function AsteroidDetailPage () {
           : 'This asteroid is not potentially hazardous'}
       </p>
       <p>Link: {jplUrl}</p>
-      {loading
+      {loadingDetail
         ? (
         <div>Loading...</div>
           )

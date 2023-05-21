@@ -12,7 +12,7 @@ export function HomePage () {
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const { favorites } = useFavoritesContext()
   const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
-  const { asteroids, loading, error } = useAsteroidsContext()
+  const { asteroids, loadingSearch: loading, errorSearch: error } = useAsteroidsContext()
   const { sort } = useSortContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 

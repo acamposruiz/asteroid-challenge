@@ -10,16 +10,20 @@ import { type AsteroidModel } from '../models/search-models-app'
 interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
   fetchAsteroidDetail: (id: string) => void
-  loading: boolean
-  error: Error | null
+  loadingSearch: boolean
+  loadingDetail: boolean
+  errorSearch: Error | null
+  errorDetail: Error | null
 }
 
 const asteroidsContext = createContext<AsteroidsContextProps | null>(null)
 
 export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   const [asteroids, setAsteroids] = useState<AsteroidModel[] | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<Error | null>(null)
+  const [loadingSearch, setLoadingSearch] = useState(false)
+  const [loadingDetail, setLoadingDetail] = useState(false)
+  const [errorSearch, setErrorSearch] = useState<Error | null>(null)
+  const [errorDetail, setErrorDetail] = useState<Error | null>(null)
   const { initDate, endDate } = useDatesContext()
 
   const fetchAsteroidsSearch = async () => {
@@ -35,20 +39,22 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     })
 
     try {
-      setLoading(true)
+      setLoadingSearch(true)
       const data = await httpService.get(urlSearchAPI)
       const asteroidsRawFlatted: AsteroidAPI[] = Object.values((data as ResponseSearchAPI).near_earth_objects).flat()
       setAsteroids(asteroidsSearchMapper(asteroidsRawFlatted))
-      setError(null)
+      setErrorSearch(null)
     } catch (error: Error | any) {
-      setError(error)
+      setErrorSearch(error)
       setAsteroids([])
     } finally {
-      setLoading(false)
+      setLoadingSearch(false)
     }
   }
 
   const fetchAsteroidDetail = async (id: string) => {
+    setLoadingDetail(true)
+
     const queryStringDetailAPI = new URLSearchParams({
       api_key: API_KEY
     })
@@ -60,7 +66,6 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     })
 
     try {
-      setLoading(true)
       const data = await httpService.get(urlDetailAPI)
       const asteroidDetail = asteroidDetailMapper(data)
       setAsteroids((asteroids) => {
@@ -75,21 +80,21 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
         newAsteroids[asteroidIndex] = asteroidDetail
         return newAsteroids
       })
-      setError(null)
+      setErrorDetail(null)
     } catch (error: Error | any) {
-      setError(error)
+      setErrorDetail(error)
     } finally {
-      setLoading(false)
+      setLoadingDetail(false)
     }
   }
 
   useEffect(() => {
-    setLoading(true)
+    setLoadingSearch(true)
     void fetchAsteroidsSearch()
   }, [initDate, endDate])
 
   return (
-    <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loading, error }}>
+    <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loadingSearch, loadingDetail, errorSearch, errorDetail }}>
       {children}
     </asteroidsContext.Provider>
   )
