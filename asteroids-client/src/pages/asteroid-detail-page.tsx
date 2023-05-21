@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom'
 import { useAsteroidsContext } from '../providers/asteroids-provider'
 
-export function AsteroidDetailComponent () {
+export function AsteroidDetailPage () {
   const params = useParams()
   const { asteroids } = useAsteroidsContext()
   const asteroid = asteroids?.find((asteroid: AsteroidModel) => asteroid.id === params.asteroidId)

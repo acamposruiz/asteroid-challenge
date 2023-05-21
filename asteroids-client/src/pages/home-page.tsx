@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react'
-import { AsteroidComponent } from './asteroid-component'
-import { IntervalRangeComponent } from './interval-range-component'
-import { SortComponent } from './sort-component'
+import { AsteroidComponent } from '../components/asteroid-component'
+import { IntervalRangeComponent } from '../components/interval-range-component'
+import { SortComponent } from '../components/sort-component'
 import { useDatesContext } from '../providers/dates-provide'
 import { useSortContext } from '../providers/sort-provide'
 import { sortAsteroids } from '../utils/sort-asteroids'
 import { useAsteroidsContext } from '../providers/asteroids-provider'
 import { useFavoritesContext } from '../providers/favorites-provider'
 
-export function HomeComponent () {
+export function HomePage () {
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const { favorites } = useFavoritesContext()
   const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()

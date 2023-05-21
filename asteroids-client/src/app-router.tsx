@@ -1,15 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { AsteroidDetailComponent } from './components/asteroid-detail-component.tsx'
-import { HomeComponent } from './components/home-component.tsx'
+import { AsteroidDetailPage } from './pages/asteroid-detail-page.tsx'
+import { HomePage } from './pages/home-page.tsx'
 
 export const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route index path="/" element={<HomeComponent />} />
+        <Route index path="/" element={<HomePage />} />
         <Route
           path="/asteroid/:asteroidId"
-          element={<AsteroidDetailComponent />}
+          element={<AsteroidDetailPage />}
         />
       </Routes>
     </Router>
