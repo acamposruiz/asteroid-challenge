@@ -20,8 +20,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
-    /* Aliases */
-    "baseUrl": "./src"
+    /* Aliases 
+    "baseUrl": "./src"*/
   },
   "include": ["src","vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

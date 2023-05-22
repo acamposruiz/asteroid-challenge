@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
-import { IntervalRangeComponent } from '../../components/interval-range-component'
+import { IntervalRangeComponent } from '../../components/interval-range'
 import { SortComponent } from '../../components/sort'
 import { useDatesContext } from '../../providers/dates-provide'
 import { useSortContext } from '../../providers/sort-provide'
@@ -8,11 +8,12 @@ import { sortAsteroids } from '../../utils/sort-asteroids'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 import { LoadingComponent } from '../../components/loading'
+import { FavoriteButtonComponent } from '../../components/toggle-favorite'
 import styles from './styles.module.css'
 
 export function HomePage () {
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
-  const { favorites } = useFavoritesContext()
+  const { favorites, toggleFavorite } = useFavoritesContext()
   const { date, setDate } = useDatesContext()
   const {
     asteroids,
@@ -33,16 +34,13 @@ export function HomePage () {
     <div>
       <header>
         <h1>
-        Asteroids{' '}
+          Asteroids{' '}
           <small>
-            <button
-              className='favorite-button'
+            <FavoriteButtonComponent isFavorite={showFavorites}
+              isBig={true}
               onClick={() => {
                 setShowFavorites(!showFavorites)
-              }}
-            >
-              <span>{showFavorites ? '💜' : '🤍'}</span>
-            </button>
+              }} />
           </small>
         </h1>
       </header>
@@ -60,14 +58,20 @@ export function HomePage () {
       <main>
         {loading
           ? (
-            <LoadingComponent/>
+            <LoadingComponent />
           )
           : sortedFavorites != null && sortedFavorites.length > 0
             ? (
               <ul>
                 {sortedFavorites.map((asteroid) => (
                   <li className={styles.item} key={asteroid.id}>
-                    <AsteroidComponent {...asteroid} />
+                    <AsteroidComponent
+                      {...asteroid}
+                      isFavorite={favorites?.includes(asteroid.id)}
+                      onFavoriteClick={() => {
+                        toggleFavorite(asteroid.id)
+                      }}
+                    />
                   </li>
                 ))}
               </ul>
