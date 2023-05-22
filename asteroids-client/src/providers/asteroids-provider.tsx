@@ -41,7 +41,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       setLoadingSearch(true)
-      const data = await httpService.get(urlSearchAPI)
+      const { data } = await httpService.get(urlSearchAPI)
       const asteroidsRawFlatted: AsteroidAPI[] = Object.values((data as ResponseSearchAPI).near_earth_objects).flat()
       setAsteroids(asteroidsSearchMapper(asteroidsRawFlatted))
       setErrorSearch(null)
@@ -70,7 +70,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     })
 
     try {
-      const data = await httpService.get(urlDetailAPI)
+      const { data } = await httpService.get(urlDetailAPI)
       const asteroidDetail = asteroidDetailMapper(data)
       setAsteroids((asteroidsPrev) => {
         console.log({ asteroidsPrev })

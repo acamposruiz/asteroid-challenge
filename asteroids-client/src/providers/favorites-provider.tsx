@@ -16,7 +16,7 @@ export const FavoritesProvider = ({ children }: {
   })
   const fetchFavorites = async () => {
     try {
-      const data = await httpService.get(url)
+      const { data } = await httpService.get(url)
       setFavorites(data)
     } catch (error: Error | any) {
       setFavorites([])
@@ -53,7 +53,14 @@ export const useFavoritesContext = () => {
     })
     const fetchFavorite = async () => {
       try {
-        const data = await httpService[method](url)
+        const { response } = await httpService[method](url)
+        if (response.status !== 200) {
+          throw new Error('Error')
+        }
+        const data = favorites.filter((favorite) => favorite !== id)
+        if (!isFavorite) {
+          data.push(id)
+        }
         setFavorites(data)
       } catch (error: Error | any) {
         setFavorites([])

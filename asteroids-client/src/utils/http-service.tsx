@@ -7,7 +7,7 @@ export const httpService = {
       if (!response.ok) {
         throw new Error(data.error_message)
       }
-      return data
+      return { data, response }
     } catch (error: Error | any) {
       throw new Error(error)
     }
@@ -22,7 +22,7 @@ export const httpService = {
       if (!response.ok) {
         throw new Error(data.error_message)
       }
-      return data
+      return { data, response }
     } catch (error: Error | any) {
       throw new Error(error)
     }
@@ -36,7 +36,7 @@ export const httpService = {
       if (!response.ok) {
         throw new Error(data.error_message)
       }
-      return data
+      return { data, response }
     } catch (error: Error | any) {
       throw new Error(error)
     }

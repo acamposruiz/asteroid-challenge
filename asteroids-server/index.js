@@ -6,9 +6,13 @@ const { AsteroidsFavoriteModel } = require('./mongo')
 const app = express()
 app.use(cors())
 
+/**
+ * REST API for Asteroids Favorite List
+ */
+
 app.get('/favorites', async (request, response) => {
   try {
-    const result = await AsteroidsFavoriteModel.find({})
+    const result = await AsteroidsFavoriteModel.find({}) // getting all ids from the database
     const favorites = result.map((asteroid) => asteroid.value)
     response.json(favorites)
   } catch (err) {
@@ -19,41 +23,40 @@ app.get('/favorites', async (request, response) => {
 
 app.post('/favorites/:id', async (request, response) => {
   const value = request.params.id
+
   try {
-    const result = await AsteroidsFavoriteModel.find({})
-    const found = result.some((asteroid) => asteroid.value === value)
+    const existingDoc = await AsteroidsFavoriteModel.findOne({ value })
 
-    if (!found) {
-      const asteroidFavorite = new AsteroidsFavoriteModel({ value })
-      const newFavorite = await asteroidFavorite.save()
-      console.log('asteroidFavorite saved!')
-      console.log(newFavorite)
-
-      result.push(newFavorite)
-      const favorites = result.map((asteroid) => asteroid.value)
-      response.json(favorites)
-    } else {
-      response.status(400).json({ error: 'Asteroid already favorited' })
+    if (existingDoc) {
+      return response.status(409).json({ error: 'The I already exist in the database.' })
     }
-  } catch (err) {
-    console.log('Error saving asteroidFavorite:', err)
-    response.status(500).json({ error: 'Internal Server Error' })
+
+    const newFavorite = new AsteroidsFavoriteModel({ value })
+    await newFavorite.save()
+
+    return response.status(200).json({ message: 'ID added successfully.' })
+  } catch (error) {
+    console.error('Error when id added:', error)
+    return response.status(500).json({ error: 'Internal Server Error.' })
   }
 })
 
 app.delete('/favorites/:id', async (request, response) => {
   const value = request.params.id
-  try {
-    const result = await AsteroidsFavoriteModel.findOneAndDelete({ value })
-    console.log('asteroidFavorite deleted!')
-    console.log(result)
 
-    const favoritesResult = await AsteroidsFavoriteModel.find({})
-    const favorites = favoritesResult.map((asteroid) => asteroid.value)
-    response.json(favorites)
-  } catch (err) {
-    console.log('Error deleting asteroidFavorite:', err)
-    response.status(500).json({ error: 'Internal Server Error' })
+  try {
+    const existingDoc = await AsteroidsFavoriteModel.findOne({ value })
+
+    if (!existingDoc) {
+      return response.status(404).json({ error: 'The ID does not exist in the database.' })
+    }
+
+    await AsteroidsFavoriteModel.deleteOne({ value })
+
+    return response.status(200).json({ message: 'ID removed successfully.' })
+  } catch (error) {
+    console.error('Error removing the ID:', error)
+    return response.status(500).json({ error: 'Internal Server Error.' })
   }
 })
 
