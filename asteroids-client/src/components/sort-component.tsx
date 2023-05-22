@@ -26,7 +26,7 @@ export function SortComponent () {
         <input
           type="checkbox"
           checked={sort?.[1] ?? false}
-          onChange={(e) => {
+          onChange={() => {
             if (sort == null) {
               return
             }
