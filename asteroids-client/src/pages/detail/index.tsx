@@ -2,11 +2,11 @@
 import { type AsteroidModel } from '../../models/search-models-app'
 import { Link, useParams } from 'react-router-dom'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
-import { FavoriteButtonComponent } from '../../components/toggle-favorite'
+import { FavoriteButtonComponent } from '../../components/favorite-button'
 import { LoadingComponent } from '../../components/loading'
 import { RowData } from '../../components/row-data'
-import styles from './styles.module.css'
 import { useFavoritesContext } from '../../providers/favorites-provider'
+import styles from './styles.module.css'
 
 export function AsteroidDetailPage () {
   const { asteroidId } = useParams()
@@ -52,18 +52,29 @@ export function AsteroidDetailPage () {
               onClick={() => {
                 toggleFavorite(asteroidId)
               }}
+              isBig={true}
             />
           </small>
         </h1>
       </header>
       <main>
-        <p>Estimated diameter: {estimatedDiameter} meters</p>
-        <p>
-          {isPotentiallyHazardousAsteroid
-            ? 'This asteroid is potentially hazardous'
-            : 'This asteroid is not potentially hazardous'}
-        </p>
-        <p>Date: {date}</p>
+        <section>
+          <h3>General data</h3>
+          <RowData title="Date" value={date} />
+          <RowData
+            title="Estimated diameter"
+            value={estimatedDiameter}
+          />
+          <RowData
+            title="Potentially hazardous"
+            value={
+              isPotentiallyHazardousAsteroid
+                ? 'This asteroid is potentially hazardous'
+                : 'This asteroid is not potentially hazardous'
+            }
+            isWarning={isPotentiallyHazardousAsteroid}
+          />
+        </section>
         {loadingDetail
           ? (
             <LoadingComponent />

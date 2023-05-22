@@ -29,8 +29,7 @@ export function SortComponent () {
             if (sort == null) {
               return
             }
-            const [, sortAsc] = sort
-            setSort([sort[0], !sortAsc])
+            setSort([sort[0], !sort[1]])
           }}
         />
         Ascending

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FavoriteButtonComponent } from '../toggle-favorite'
+import { FavoriteButtonComponent } from '../favorite-button'
 import styles from './styles.module.css'
 import { RowData } from '../row-data'
 
@@ -36,19 +36,20 @@ export function AsteroidComponent ({
       <Link className={styles.link} to={asteroidPath}>
         Go detail page
       </Link>
+      <RowData title="Date" value={date} />
       <RowData
         title="Estimated diameter"
         value={`${estimatedDiameter} meters`}
       />
       <RowData
         title="Potentially hazardous"
+        isWarning={isPotentiallyHazardousAsteroid}
         value={
           isPotentiallyHazardousAsteroid
             ? 'This asteroid is potentially hazardous'
             : 'This asteroid is not potentially hazardous'
         }
       />
-      <RowData title="Date" value={date} />
     </article>
   )
 }

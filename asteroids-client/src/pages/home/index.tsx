@@ -8,7 +8,7 @@ import { sortAsteroids } from '../../utils/sort-asteroids'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 import { LoadingComponent } from '../../components/loading'
-import { FavoriteButtonComponent } from '../../components/toggle-favorite'
+import { FavoriteButtonComponent } from '../../components/favorite-button'
 import styles from './styles.module.css'
 
 export function HomePage () {
