@@ -7,6 +7,7 @@ import { useSortContext } from '../../providers/sort-provide'
 import { sortAsteroids } from '../../utils/sort-asteroids'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { useFavoritesContext } from '../../providers/favorites-provider'
+import { LoadingComponent } from '../../components/loading'
 import styles from './styles.module.css'
 
 export function HomePage () {
@@ -62,13 +63,13 @@ export function HomePage () {
       <main>
         {loading
           ? (
-            <div>Loading...</div>
+            <LoadingComponent/>
           )
           : sortedFavorites != null && sortedFavorites.length > 0
             ? (
               <ul>
                 {sortedFavorites.map((asteroid) => (
-                  <li className={styles.tem} key={asteroid.id}>
+                  <li className={styles.item} key={asteroid.id}>
                     <AsteroidComponent {...asteroid} />
                   </li>
                 ))}
