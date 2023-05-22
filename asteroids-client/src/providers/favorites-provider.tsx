@@ -5,12 +5,15 @@ import { httpService } from '../utils/http-service'
 const favoritesContext = createContext<{
   favorites: string[] | null
   setFavorites: (favorites: string[]) => void
+  showFavorites: boolean
+  setShowFavorites: (showFavorites: boolean) => void
 } | null>(null)
 
 export const FavoritesProvider = ({ children }: {
   children: ReactNode
 }) => {
   const [favorites, setFavorites] = useState<string[] | null>([])
+  const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const url = urlConstructor({
     endpoint: endpoints.FAVORITES
   })
@@ -26,7 +29,7 @@ export const FavoritesProvider = ({ children }: {
     void fetchFavorites()
   }, [])
   return (
-    <favoritesContext.Provider value={{ favorites, setFavorites }}>
+    <favoritesContext.Provider value={{ favorites, showFavorites, setFavorites, setShowFavorites }}>
       {children}
     </favoritesContext.Provider>
   )
@@ -39,7 +42,7 @@ export const useFavoritesContext = () => {
     throw new Error('useFavoritesContext must be used within a favoritesProvider')
   }
 
-  const { favorites, setFavorites } = context
+  const { favorites, setFavorites, showFavorites, setShowFavorites } = context
 
   const toggleFavorite = (id: string) => {
     if (favorites == null) {
@@ -69,5 +72,5 @@ export const useFavoritesContext = () => {
     void fetchFavorite()
   }
 
-  return { favorites, toggleFavorite }
+  return { favorites, toggleFavorite, showFavorites, setShowFavorites }
 }

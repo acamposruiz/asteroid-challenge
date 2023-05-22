@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
 import { IntervalRangeComponent } from '../../components/interval-range'
 import { SortComponent } from '../../components/sort'
@@ -12,8 +12,8 @@ import { FavoriteButtonComponent } from '../../components/favorite-button'
 import styles from './styles.module.css'
 
 export function HomePage () {
-  const [showFavorites, setShowFavorites] = useState<boolean>(false)
-  const { favorites, toggleFavorite } = useFavoritesContext()
+  const { favorites, toggleFavorite, showFavorites, setShowFavorites } =
+    useFavoritesContext()
   const { date, setDate } = useDatesContext()
   const { sort, setSort } = useSortContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
