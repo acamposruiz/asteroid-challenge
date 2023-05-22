@@ -29,7 +29,7 @@ export function HomePage () {
   const sortedFavorites = filteredAsteroids?.sort(sortContent)
 
   return (
-    <div className="App">
+    <div>
       <header>
         <h1>
         Asteroids{' '}
@@ -46,38 +46,42 @@ export function HomePage () {
         </h1>
       </header>
       {error != null && <h3 className="error-message">{error.message}</h3>}
-      <IntervalRangeComponent
-        initDate={initDate}
-        endDate={endDate}
-        onInitDateChange={(date) => {
-          setInitDate(date)
-        }}
-        onEndDateChange={(date) => {
-          setEndDate(date)
-        }}
-      />
-      <SortComponent />
-      {loading
-        ? (
-          <div>Loading...</div>
-        )
-        : sortedFavorites != null && sortedFavorites.length > 0
+      <section>
+        <IntervalRangeComponent
+          initDate={initDate}
+          endDate={endDate}
+          onInitDateChange={(date) => {
+            setInitDate(date)
+          }}
+          onEndDateChange={(date) => {
+            setEndDate(date)
+          }}
+        />
+        <SortComponent />
+      </section>
+      <main>
+        {loading
           ? (
-            <ul>
-              {sortedFavorites.map((asteroid) => (
-                <li className={styles.tem} key={asteroid.id}>
-                  <AsteroidComponent {...asteroid} />
-                </li>
-              ))}
-            </ul>
+            <div>Loading...</div>
           )
-          : showFavorites
+          : sortedFavorites != null && sortedFavorites.length > 0
             ? (
-              <p>No favorites</p>
+              <ul>
+                {sortedFavorites.map((asteroid) => (
+                  <li className={styles.tem} key={asteroid.id}>
+                    <AsteroidComponent {...asteroid} />
+                  </li>
+                ))}
+              </ul>
             )
-            : (
-              <p>No asteroids</p>
-            )}
+            : showFavorites
+              ? (
+                <p>No favorites</p>
+              )
+              : (
+                <p>No asteroids</p>
+              )}
+      </main>
     </div>
   )
 }
