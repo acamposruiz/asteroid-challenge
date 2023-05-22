@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { AsteroidDetailPage } from './pages/asteroid-detail-page.tsx'
-import { HomePage } from './pages/home-page.tsx'
+import { AsteroidDetailPage } from './pages/detail/index.tsx'
+import { HomePage } from './pages/home/index.tsx'
 
 export const AppRouter = () => {
   return (

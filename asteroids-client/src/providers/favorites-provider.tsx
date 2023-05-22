@@ -26,9 +26,9 @@ export const FavoritesProvider = ({ children }: {
     void fetchFavorites()
   }, [])
   return (
-        <favoritesContext.Provider value={{ favorites, setFavorites }}>
-            {children}
-        </favoritesContext.Provider>
+    <favoritesContext.Provider value={{ favorites, setFavorites }}>
+      {children}
+    </favoritesContext.Provider>
   )
 }
 

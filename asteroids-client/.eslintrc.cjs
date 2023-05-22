@@ -1,3 +1,5 @@
+// config for eslint
+// https://eslint.org/docs/user-guide/configuring
 module.exports = {
   env: {
     browser: true,
@@ -8,6 +10,12 @@ module.exports = {
     'standard-with-typescript'
   ],
   overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/indent': ['error', 2]
+      }
+    }
   ],
   parserOptions: {
     ecmaVersion: 'latest',
