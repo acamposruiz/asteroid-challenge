@@ -24,12 +24,12 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   const [loadingDetail, setLoadingDetail] = useState(false)
   const [errorSearch, setErrorSearch] = useState<Error | null>(null)
   const [errorDetail, setErrorDetail] = useState<Error | null>(null)
-  const { initDate, endDate } = useDatesContext()
+  const { date } = useDatesContext()
 
   const fetchAsteroidsSearch = async () => {
     const queryStringSearchAPI = new URLSearchParams({
-      start_date: initDate,
-      end_date: endDate,
+      start_date: date.startDate,
+      end_date: date.endDate,
       api_key: API_KEY
     })
 
@@ -91,7 +91,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setLoadingSearch(true)
     void fetchAsteroidsSearch()
-  }, [initDate, endDate])
+  }, [date])
 
   return (
     <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loadingSearch, loadingDetail, errorSearch, errorDetail }}>

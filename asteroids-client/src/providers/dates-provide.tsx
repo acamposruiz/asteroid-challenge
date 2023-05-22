@@ -1,21 +1,18 @@
 import { type ReactNode, createContext, useState, useContext } from 'react'
 
 const datesContext = createContext<{
-  initDate: string
-  endDate: string
-  setInitDate: (initDate: string) => void
-  setEndDate: (endDate: string) => void
+  date: { startDate: string, endDate: string }
+  setDate: (date: { startDate: string, endDate: string }) => void
 } | null>(null)
 
 export const DatesProvider = ({ children }: {
   children: ReactNode
 }) => {
-  const [initDate, setInitDate] = useState('2015-09-07')
-  const [endDate, setEndDate] = useState('2015-09-13')
+  const [date, setDate] = useState({ startDate: '2015-09-07', endDate: '2015-09-13' })
   return (
-        <datesContext.Provider value={{ initDate, endDate, setInitDate, setEndDate }}>
-            {children}
-        </datesContext.Provider>
+    <datesContext.Provider value={{ date, setDate }}>
+      {children}
+    </datesContext.Provider>
 
   )
 }

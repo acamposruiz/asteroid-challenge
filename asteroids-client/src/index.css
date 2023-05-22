@@ -235,3 +235,45 @@ select, input {
 .retro-checkbox label {
   cursor: pointer;
 }
+
+/* Retro styles for buttons */
+
+.retro-button {
+  background-color: #333;
+  border: 1px solid #01ff70;
+  color: #fafafa;
+  font-family: "Courier New";
+  font-size: 1rem;
+  padding: .5rem;
+  margin: .5rem;
+  cursor: pointer;
+}
+
+.retro-button:hover {
+  background-color: #01ff70;
+  color: #333;
+}
+
+.retro-button:active {
+  background-color: #01ff70;
+  color: #333;
+}
+
+.retro-button:disabled {
+  background-color: #333;
+  color: #fafafa;
+  cursor: not-allowed;
+} 
+
+.retro-button:disabled:hover {
+  background-color: #333;
+  color: #fafafa;
+  cursor: not-allowed;
+} 
+
+.retro-button:disabled:active {
+  background-color: #333;
+  color: #fafafa;
+  cursor: not-allowed;
+} 
+

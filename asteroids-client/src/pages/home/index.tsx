@@ -13,7 +13,7 @@ import styles from './styles.module.css'
 export function HomePage () {
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const { favorites } = useFavoritesContext()
-  const { initDate, endDate, setInitDate, setEndDate } = useDatesContext()
+  const { date, setDate } = useDatesContext()
   const {
     asteroids,
     loadingSearch: loading,
@@ -49,13 +49,10 @@ export function HomePage () {
       {error != null && <h3 className="error-message">{error.message}</h3>}
       <section>
         <IntervalRangeComponent
-          initDate={initDate}
-          endDate={endDate}
-          onInitDateChange={(date) => {
-            setInitDate(date)
-          }}
-          onEndDateChange={(date) => {
-            setEndDate(date)
+          startDateInit={date.startDate}
+          endDateInit={date.endDate}
+          onSubmit={({ startDate, endDate }) => {
+            setDate({ startDate, endDate })
           }}
         />
         <SortComponent />
