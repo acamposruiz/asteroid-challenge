@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { createContext, useState, useContext, useEffect, type ReactNode } from 'react'
+import { createContext, useState, useContext, useEffect, type ReactNode, useCallback } from 'react'
 import { useDatesContext } from './dates-provide'
 import { asteroidDetailMapper, asteroidsSearchMapper } from '../mappers/asteroids-mapper'
 import { API_KEY, endpoints, urlConstructor } from '../utils/endpoints'
@@ -9,6 +9,7 @@ import { type AsteroidModel } from '../models/search-models-app'
 
 interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
+  detailContent?: AsteroidModel | null
   fetchAsteroidDetail: (id: string) => void
   loadingSearch: boolean
   loadingDetail: boolean
@@ -26,10 +27,10 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   const [errorDetail, setErrorDetail] = useState<Error | null>(null)
   const { date } = useDatesContext()
 
-  const fetchAsteroidsSearch = async () => {
+  const unMemorizedFetchAsteroidsSearch = async (dateParam: { startDate: string, endDate: string }) => {
     const queryStringSearchAPI = new URLSearchParams({
-      start_date: date.startDate,
-      end_date: date.endDate,
+      start_date: dateParam.startDate,
+      end_date: dateParam.endDate,
       api_key: API_KEY
     })
 
@@ -52,8 +53,11 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const fetchAsteroidDetail = async (id: string) => {
-    setLoadingDetail(true)
+  const unMemorizedFetchAsteroidDetail = async (id: string) => {
+    if (asteroids == null) {
+      return
+    }
+    setLoadingDetail(() => true)
 
     const queryStringDetailAPI = new URLSearchParams({
       api_key: API_KEY
@@ -68,15 +72,17 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     try {
       const data = await httpService.get(urlDetailAPI)
       const asteroidDetail = asteroidDetailMapper(data)
-      setAsteroids((asteroids) => {
-        if (asteroids == null) {
+      setAsteroids((asteroidsPrev) => {
+        console.log({ asteroidsPrev })
+
+        if (asteroidsPrev == null) {
           return null
         }
-        const asteroidIndex = asteroids.findIndex((asteroid) => asteroid.id === asteroidDetail.id)
+        const asteroidIndex = asteroidsPrev.findIndex((asteroid) => asteroid.id === asteroidDetail.id)
         if (asteroidIndex === -1) {
-          return asteroids
+          return asteroidsPrev
         }
-        const newAsteroids = [...asteroids]
+        const newAsteroids = [...asteroidsPrev]
         newAsteroids[asteroidIndex] = asteroidDetail
         return newAsteroids
       })
@@ -88,9 +94,12 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
+  const fetchAsteroidsSearch = useCallback(unMemorizedFetchAsteroidsSearch, [])
+  const fetchAsteroidDetail = useCallback(unMemorizedFetchAsteroidDetail, [asteroids])
+
   useEffect(() => {
     setLoadingSearch(true)
-    void fetchAsteroidsSearch()
+    void fetchAsteroidsSearch(date)
   }, [date])
 
   return (
@@ -100,10 +109,30 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   )
 }
 
-export const useAsteroidsContext = (): AsteroidsContextProps => {
+export const useAsteroidsContext = (asteroidId?: string): AsteroidsContextProps => {
   const context = useContext(asteroidsContext)
   if (context == null) {
     throw new Error('useAsteroidsContext must be used within an AsteroidsProvider')
   }
+  const { asteroids, fetchAsteroidDetail } = context
+
+  useEffect(() => {
+    if (asteroidId != null) {
+      const asteroid = asteroids?.find(
+        (asteroid: AsteroidModel) => asteroid.id === asteroidId)
+
+      if (asteroid?.orbitalData == null) {
+        fetchAsteroidDetail(asteroidId)
+      }
+    }
+  }, [fetchAsteroidDetail])
+
+  if (asteroidId != null) {
+    const detailContent = asteroids?.find(
+      (asteroid: AsteroidModel) => asteroid.id === asteroidId
+    )
+    return { ...context, detailContent }
+  }
+
   return context
 }

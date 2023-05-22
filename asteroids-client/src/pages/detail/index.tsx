@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { type AsteroidModel } from '../../models/search-models-app'
 import { Link, useParams } from 'react-router-dom'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { FavoriteButtonComponent } from '../../components/favorite-button'
@@ -11,16 +10,10 @@ import styles from './styles.module.css'
 export function AsteroidDetailPage () {
   const { asteroidId } = useParams()
   const { favorites, toggleFavorite } = useFavoritesContext()
-  const { asteroids, fetchAsteroidDetail, loadingDetail, errorDetail } =
-    useAsteroidsContext()
-  const asteroid = asteroids?.find(
-    (asteroid: AsteroidModel) => asteroid.id === asteroidId
-  )
-  if (asteroidId != null && asteroid?.orbitalData == null) {
-    fetchAsteroidDetail(asteroidId)
-  }
+  const { detailContent, loadingDetail, errorDetail } =
+    useAsteroidsContext(asteroidId)
 
-  if (asteroid == null || asteroidId === undefined) {
+  if (detailContent == null || asteroidId === undefined) {
     return (
       <div>
         <Link to="/">Back to home</Link>
@@ -34,7 +27,7 @@ export function AsteroidDetailPage () {
     isPotentiallyHazardousAsteroid,
     orbitalData,
     date
-  } = asteroid
+  } = detailContent
 
   return (
     <div>
@@ -75,7 +68,7 @@ export function AsteroidDetailPage () {
             isWarning={isPotentiallyHazardousAsteroid}
           />
         </section>
-        {loadingDetail
+        {loadingDetail || !orbitalData
           ? (
             <LoadingComponent />
           )
