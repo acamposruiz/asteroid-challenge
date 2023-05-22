@@ -20,7 +20,7 @@ export function HomePage () {
     loadingSearch: loading,
     errorSearch: error
   } = useAsteroidsContext()
-  const { sort } = useSortContext()
+  const { sort, setSort } = useSortContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 
   const filteredAsteroids =
@@ -36,11 +36,13 @@ export function HomePage () {
         <h1>
           Asteroids{' '}
           <small>
-            <FavoriteButtonComponent isFavorite={showFavorites}
+            <FavoriteButtonComponent
+              isFavorite={showFavorites}
               isBig={true}
               onClick={() => {
                 setShowFavorites(!showFavorites)
-              }} />
+              }}
+            />
           </small>
         </h1>
       </header>
@@ -53,7 +55,12 @@ export function HomePage () {
             setDate({ startDate, endDate })
           }}
         />
-        <SortComponent />
+        <SortComponent
+          {...{
+            sort,
+            setSort
+          }}
+        />
       </section>
       <main>
         {loading
