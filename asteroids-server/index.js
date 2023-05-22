@@ -70,8 +70,6 @@ app.get('/asteroids-api/:type/:id?', (request, response) => {
     method: request.method
   }
 
-  console.log({ options })
-
   response.setHeader('Access-Control-Allow-Origin', '*')
 
   const proxy = http.request(options, (res) => {

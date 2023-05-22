@@ -13,23 +13,23 @@ export function IntervalRangeComponent ({
   onEndDateChange
 }: Props) {
   return (
-        <div>
-            <label>
+    <div>
+      <label>
                 Start date:
-                <input
-                    type="date"
-                    value={initDate}
-                    onChange={(e) => { onInitDateChange(e.target.value) }}
-                />
-            </label>
-            <label>
+        <input
+          type="date"
+          value={initDate}
+          onChange={(e) => { onInitDateChange(e.target.value) }}
+        />
+      </label>
+      <label>
                 End date:
-                <input
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => { onEndDateChange(e.target.value) }}
-                />
-            </label>
-        </div>
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => { onEndDateChange(e.target.value) }}
+        />
+      </label>
+    </div>
   )
 }

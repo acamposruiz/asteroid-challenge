@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
 import { IntervalRangeComponent } from '../../components/interval-range-component'
-import { SortComponent } from '../../components/sort-component'
+import { SortComponent } from '../../components/sort'
 import { useDatesContext } from '../../providers/dates-provide'
 import { useSortContext } from '../../providers/sort-provide'
 import { sortAsteroids } from '../../utils/sort-asteroids'

@@ -1,6 +1,5 @@
-
-import { type AsteroidModel } from '../models/search-models-app'
-import { useSortContext } from '../providers/sort-provide'
+import { type AsteroidModel } from '../../models/search-models-app'
+import { useSortContext } from '../../providers/sort-provide'
 
 export function SortComponent () {
   const { sort, setSort } = useSortContext()
@@ -22,7 +21,7 @@ export function SortComponent () {
           <option value="isPotentiallyHazardousAsteroid" >Dangerousness</option>
         </select>
       </label>
-      <label>
+      <label className="retro-checkbox">
         <input
           type="checkbox"
           checked={sort?.[1] ?? false}
