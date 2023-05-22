@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
 import { IntervalRangeComponent } from '../../components/interval-range'
 import { SortComponent } from '../../components/sort'
@@ -15,20 +15,24 @@ export function HomePage () {
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const { favorites, toggleFavorite } = useFavoritesContext()
   const { date, setDate } = useDatesContext()
+  const { sort, setSort } = useSortContext()
+  const sortContent = useCallback(sortAsteroids(sort), [sort])
   const {
     asteroids,
     loadingSearch: loading,
     errorSearch: error
   } = useAsteroidsContext()
-  const { sort, setSort } = useSortContext()
-  const sortContent = useCallback(sortAsteroids(sort), [sort])
 
-  const filteredAsteroids =
-    favorites != null && showFavorites
-      ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
-      : asteroids
+  const content = useMemo(() => {
+    const filteredAsteroids =
+      favorites != null && showFavorites
+        ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
+        : asteroids
 
-  const sortedFavorites = filteredAsteroids?.sort(sortContent)
+    const sortedFavorites = filteredAsteroids?.sort(sortContent)
+
+    return sortedFavorites
+  }, [favorites, showFavorites, asteroids, sortContent])
 
   return (
     <div>
@@ -67,10 +71,10 @@ export function HomePage () {
           ? (
             <LoadingComponent />
           )
-          : sortedFavorites != null && sortedFavorites.length > 0
+          : content != null && content.length > 0
             ? (
               <ul>
-                {sortedFavorites.map((asteroid) => (
+                {content.map((asteroid) => (
                   <li className={styles.item} key={asteroid.id}>
                     <AsteroidComponent
                       {...asteroid}
