@@ -10,9 +10,11 @@ export function Content () {
     toggleFavorite,
     showFavorites,
     viewMore,
-    viewMoreButtonEnabled,
+    showViewMoreButton,
     content
   } = useHome()
+
+  const showContent = content != null && content.length > 0
 
   return (
     <main>
@@ -20,7 +22,7 @@ export function Content () {
         ? (
           <LoadingComponent />
         )
-        : content != null && content.length > 0
+        : showContent
           ? (
             <ul>
               {content.map((asteroid) => (
@@ -43,7 +45,7 @@ export function Content () {
             : (
               <p>No asteroids</p>
             )}
-      {content != null && content.length > 0 && viewMoreButtonEnabled && !loading && (
+      {showViewMoreButton && (
         <button
           className="retro-button"
           onClick={() => {

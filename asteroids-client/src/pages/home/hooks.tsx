@@ -12,14 +12,9 @@ export function useHome () {
   const [viewMoreButtonEnabled, setViewMoreButtonEnabled] = useState(false)
   const [favoritesButtonEnabled, setFavoritesButtonEnabled] = useState(false)
   const { date, setDate } = useDatesContext()
-  const {
-    asteroids,
-    loading,
-    error
-  } = useAsteroidsContext()
+  const { asteroids, loading, error } = useAsteroidsContext()
   const { sort, setSort } = useSortContext()
-  const { favorites, toggleFavorite, showFavorites, setShowFavorites } =
-    useFavoritesContext()
+  const { favorites, toggleFavorite, showFavorites, setShowFavorites } = useFavoritesContext()
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 
   const viewMore = () => {
@@ -29,14 +24,10 @@ export function useHome () {
   const content = useMemo(() => {
     // calculate favorites asteroids
     const favoritesAsteroids =
-      favorites != null
-        ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
-        : []
+      favorites != null ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id)) : []
 
     // control enabling of favorites button based on existence of favorites
-    setFavoritesButtonEnabled(
-      favoritesAsteroids != null && favoritesAsteroids.length > 0
-    )
+    setFavoritesButtonEnabled(favoritesAsteroids != null && favoritesAsteroids.length > 0)
 
     // get current asteroids based on showFavorites
     const currentAsteroids = showFavorites ? favoritesAsteroids : asteroids
@@ -45,9 +36,7 @@ export function useHome () {
     const slicedAsteroids = currentAsteroids?.slice(0, viewCount)
 
     // control enabling of viewMore button
-    setViewMoreButtonEnabled(
-      currentAsteroids != null && currentAsteroids.length > viewCount
-    )
+    setViewMoreButtonEnabled(currentAsteroids != null && currentAsteroids.length > viewCount)
 
     // sort asteroids based on sortContent
     const sortedFavorites = slicedAsteroids?.sort(sortContent)
@@ -61,6 +50,8 @@ export function useHome () {
       setViewCount(VIEW_COUNT_INCREMENT)
     }
   }, [loading])
+
+  const showViewMoreButton = viewMoreButtonEnabled && !loading
 
   return {
     date,
@@ -76,7 +67,7 @@ export function useHome () {
     favoritesButtonEnabled,
     sortContent,
     viewMore,
-    viewMoreButtonEnabled,
+    showViewMoreButton,
     content
   }
 }
