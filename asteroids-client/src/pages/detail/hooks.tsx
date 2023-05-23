@@ -9,7 +9,12 @@ import { useAsteroidsContext } from '../../providers/asteroids-provider'
 export function useDetail () {
   const { asteroidId } = useParams()
   const { asteroids, setAsteroids } = useAsteroidsContext()
-  const [asteroid, setAsteroid] = useState<AsteroidModel | null>(null)
+  const [asteroid, setAsteroid] = useState<AsteroidModel | null>(() => {
+    if (asteroids == null) {
+      return null
+    }
+    return asteroids.find(asteroid => asteroid.id === asteroidId) ?? null
+  })
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
@@ -38,11 +43,11 @@ export function useDetail () {
       if (asteroids == null) {
         return
       }
-      setAsteroids(asteroids.map(asteroid => {
-        if (asteroid.id === asteroidDetail.id) {
+      setAsteroids(asteroids.map(asteroidItem => {
+        if (asteroidItem.id === asteroidDetail.id) {
           return asteroidDetail
         }
-        return asteroid
+        return asteroidItem
       }))
     } catch (error: Error | any) {
       setError(error)
@@ -52,12 +57,9 @@ export function useDetail () {
   }
 
   useEffect(() => {
-    const cachedAsteroid = asteroids?.find(asteroid => asteroid.id === asteroidId)
-    if (!cachedAsteroid?.orbitalData) {
+    if (!asteroid?.orbitalData) {
       setLoading(true)
       void getDetail(asteroidId)
-    } else {
-      setAsteroid(cachedAsteroid)
     }
   }, [])
 
