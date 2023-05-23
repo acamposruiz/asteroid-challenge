@@ -26,23 +26,29 @@ export function useHome () {
   }
 
   const content = useMemo(() => {
+    // calculate favorites asteroids
     const favoritesAsteroids =
       favorites != null
         ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
         : []
 
+    // control enabling of favorites button based on existence of favorites
     setFavoritesButtonEnabled(
       favoritesAsteroids != null && favoritesAsteroids.length > 0
     )
 
+    // get current asteroids based on showFavorites
     const currentAsteroids = showFavorites ? favoritesAsteroids : asteroids
 
+    // slice asteroids based on viewCount
     const slicedAsteroids = currentAsteroids?.slice(0, viewCount)
 
+    // control enabling of viewMore button
     setViewMoreButtonEnabled(
       currentAsteroids != null && currentAsteroids.length > viewCount
     )
 
+    // sort asteroids based on sortContent
     const sortedFavorites = slicedAsteroids?.sort(sortContent)
 
     return sortedFavorites

@@ -34,11 +34,13 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
     void fetchFavorites()
   }, [])
 
+  // getting current favorites asteroids
   const favoritesAsteroids =
   favorites != null
     ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
     : []
 
+  // setting showFavorites to false if there are no favorites
   if (showFavorites && favoritesAsteroids?.length === 0) {
     setShowFavorites(() => false)
   }
