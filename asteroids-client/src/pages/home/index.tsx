@@ -1,39 +1,26 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { useCallback, useMemo } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
 import { IntervalRangeComponent } from '../../components/interval-range'
 import { SortComponent } from '../../components/sort'
-import { useDatesContext } from '../../providers/dates-provide'
-import { useSortContext } from '../../providers/sort-provide'
-import { sortAsteroids } from '../../utils/sort-asteroids'
-import { useAsteroidsContext } from '../../providers/asteroids-provider'
-import { useFavoritesContext } from '../../providers/favorites-provider'
 import { LoadingComponent } from '../../components/loading'
 import { FavoriteButtonComponent } from '../../components/favorite-button'
 import styles from './styles.module.css'
+import { useContent } from './hooks'
 
 export function HomePage () {
-  const { date, setDate } = useDatesContext()
   const {
-    asteroids,
+    date,
+    setDate,
     loading,
-    error
-  } = useAsteroidsContext()
-  const { sort, setSort } = useSortContext()
-  const { favorites, toggleFavorite, showFavorites, setShowFavorites } =
-    useFavoritesContext()
-  const sortContent = useCallback(sortAsteroids(sort), [sort])
-
-  const content = useMemo(() => {
-    const filteredAsteroids =
-      favorites != null && showFavorites
-        ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
-        : asteroids
-
-    const sortedFavorites = filteredAsteroids?.sort(sortContent)
-
-    return sortedFavorites
-  }, [favorites, showFavorites, asteroids, sortContent])
+    error,
+    sort,
+    setSort,
+    favorites,
+    toggleFavorite,
+    showFavorites,
+    setShowFavorites,
+    viewMore,
+    content
+  } = useContent()
 
   return (
     <div>
@@ -95,6 +82,16 @@ export function HomePage () {
               : (
                 <p>No asteroids</p>
               )}
+        {content != null && content.length > 0 && (
+          <button
+            className="retro-button"
+            onClick={() => {
+              viewMore()
+            }}
+          >
+            View more
+          </button>
+        )}
       </main>
     </div>
   )
