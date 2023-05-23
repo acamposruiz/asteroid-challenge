@@ -9,6 +9,7 @@ import { type AsteroidModel } from '../models/search-models-app'
 
 interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
+  setAsteroids: (asteroids: AsteroidModel[] | null) => void
   loading: boolean
   error: Error | null
 }
@@ -56,7 +57,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <asteroidsContext.Provider
-      value={{ asteroids, loading, error }}
+      value={{ asteroids, setAsteroids, loading, error }}
     >
       {children}
     </asteroidsContext.Provider>

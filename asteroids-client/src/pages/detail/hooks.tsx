@@ -4,9 +4,11 @@ import { type AsteroidModel } from '../../models/search-models-app'
 import { API_KEY, endpoints, urlConstructor } from '../../utils/endpoints'
 import { httpService } from '../../utils/http-service'
 import { asteroidDetailMapper } from '../../mappers/asteroids-mapper'
+import { useAsteroidsContext } from '../../providers/asteroids-provider'
 
 export function useDetail () {
   const { asteroidId } = useParams()
+  const { asteroids, setAsteroids } = useAsteroidsContext()
   const [asteroid, setAsteroid] = useState<AsteroidModel | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
@@ -33,6 +35,15 @@ export function useDetail () {
       const asteroidDetail = asteroidDetailMapper(data)
       setAsteroid(asteroidDetail)
       setError(null)
+      if (asteroids == null) {
+        return
+      }
+      setAsteroids(asteroids.map(asteroid => {
+        if (asteroid.id === asteroidDetail.id) {
+          return asteroidDetail
+        }
+        return asteroid
+      }))
     } catch (error: Error | any) {
       setError(error)
     } finally {
@@ -41,8 +52,13 @@ export function useDetail () {
   }
 
   useEffect(() => {
-    setLoading(true)
-    void getDetail(asteroidId)
+    const cachedAsteroid = asteroids?.find(asteroid => asteroid.id === asteroidId)
+    if (!cachedAsteroid?.orbitalData) {
+      setLoading(true)
+      void getDetail(asteroidId)
+    } else {
+      setAsteroid(cachedAsteroid)
+    }
   }, [])
 
   return {
