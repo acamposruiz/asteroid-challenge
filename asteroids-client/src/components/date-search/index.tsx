@@ -1,16 +1,18 @@
 import { useState } from 'react'
 
-interface Props {
+interface DateSearchComponentProps {
   startDateInit: string
   endDateInit: string
+  disabled?: boolean
   onSubmit: ({ startDate, endDate }: { startDate: string, endDate: string }) => void
 }
 
-export function IntervalRangeComponent ({
+export function DateSearchComponent ({
   startDateInit,
   endDateInit,
+  disabled = false,
   onSubmit
-}: Props) {
+}: DateSearchComponentProps) {
   const [startDate, setStartDate] = useState(() => {
     return startDateInit
   })
@@ -25,6 +27,7 @@ export function IntervalRangeComponent ({
         <input
           type="date"
           value={startDate}
+          disabled={disabled}
           onChange={(e) => { setStartDate(e.target.value) }}
         />
       </label>
@@ -33,11 +36,13 @@ export function IntervalRangeComponent ({
         <input
           type="date"
           value={endDate}
+          disabled={disabled}
           onChange={(e) => { setEndDate(e.target.value) }}
         />
       </label>
       <button
         className='retro-button'
+        disabled={disabled}
         onClick={() => {
           onSubmit({ startDate, endDate })
         }}

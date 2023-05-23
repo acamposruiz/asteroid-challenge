@@ -1,12 +1,10 @@
-
-
 pre,
 code {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 
 pre {
-  padding: .5rem;
+  padding: 0.5rem;
   line-height: 1.25;
   overflow-x: scroll;
 }
@@ -109,7 +107,7 @@ body {
 p,
 .retro-p {
   font-size: 1rem;
-  margin: 0.5rem 0 0.5rem 0 ; 
+  margin: 0.5rem 0 0.5rem 0;
 }
 
 h1,
@@ -120,7 +118,7 @@ h3,
 .retro-h3,
 h4,
 .retro-h4 {
-  margin: 1.414rem 0 .5rem;
+  margin: 1.414rem 0 0.5rem;
   font-weight: inherit;
   line-height: 1.42;
 }
@@ -153,12 +151,12 @@ h5,
 
 h6,
 .retro-h6 {
-  font-size: .88rem;
+  font-size: 0.88rem;
 }
 
 small,
 .retro-small {
-  font-size: .707em;
+  font-size: 0.707em;
 }
 
 /* https://github.com/mrmrs/fluidity */
@@ -189,7 +187,7 @@ body {
   line-height: 1.45;
   margin: 6rem auto 1rem;
   max-width: 48rem;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 pre {
@@ -202,18 +200,19 @@ blockquote {
 }
 
 /* Retro styles for form select */
-select, input {
+select,
+input {
   background-color: #333;
   border: 1px solid #01ff70;
   color: #fafafa;
   font-family: "Courier New";
   font-size: 1rem;
-  padding: .5rem;
-  margin: .5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 }
 
 .retro-checkbox {
-  display:inline;
+  display: inline;
 }
 
 .retro-checkbox input[type="checkbox"] {
@@ -222,7 +221,7 @@ select, input {
   width: 20px;
   height: 20px;
   cursor: pointer;
-  margin:0;
+  margin: 0;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   margin-bottom: -0.25rem;
@@ -244,8 +243,8 @@ select, input {
   color: #fafafa;
   font-family: "Courier New";
   font-size: 1rem;
-  padding: .5rem;
-  margin: .5rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
   cursor: pointer;
 }
 
@@ -259,21 +258,18 @@ select, input {
   color: #333;
 }
 
-.retro-button:disabled {
+.retro-button:disabled,
+.retro-button:disabled:hover,
+.retro-button:disabled:active,
+select:disabled,
+input:disabled,
+input[type="checkbox"]:disabled:active,
+input[type="checkbox"]:disabled {
   background-color: #333;
-  color: #fafafa;
+  color: #9b9b9b;
+  border: 1px solid #3b694f;
   cursor: not-allowed;
-} 
-
-.retro-button:disabled:hover {
-  background-color: #333;
-  color: #fafafa;
-  cursor: not-allowed;
-} 
-
-.retro-button:disabled:active {
-  background-color: #333;
-  color: #fafafa;
-  cursor: not-allowed;
-} 
-
+}
+input[type="checkbox"]:disabled:checked {
+  background-color: #3e6a32;
+}

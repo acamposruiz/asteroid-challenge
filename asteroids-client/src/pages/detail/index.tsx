@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { FavoriteButtonComponent } from '../../components/favorite-button'
+import { FavoriteButtonComponent, FavoriteButtonSize } from '../../components/favorite-button'
 import { LoadingComponent } from '../../components/loading'
 import { RowData } from '../../components/row-data'
 import { useFavoritesContext } from '../../providers/favorites-provider'
@@ -56,7 +56,7 @@ export function DetailPage () {
               onClick={() => {
                 toggleFavorite(asteroidId)
               }}
-              size={true}
+              size={FavoriteButtonSize.Big}
             />
           </small>
         </h1>

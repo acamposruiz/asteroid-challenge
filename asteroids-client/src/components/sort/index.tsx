@@ -1,17 +1,21 @@
 import { type AsteroidModel } from '../../models/search-models-app'
 
-export function SortComponent ({
-  sort,
-  setSort
-}: {
+interface SortComponentProps {
   sort: [keyof AsteroidModel, boolean] | null
   setSort: (sort: [keyof AsteroidModel, boolean] | null) => void
-}) {
+  disabled?: boolean
+}
+export function SortComponent ({
+  sort,
+  setSort,
+  disabled = false
+}: SortComponentProps) {
   return (
     <div>
       <label>
         Sort by:
         <select
+          disabled={disabled}
           value={sort?.[0] ?? ''}
           onChange={(e) => {
             const sortKey = e.target.value
@@ -29,6 +33,7 @@ export function SortComponent ({
       </label>
       <label className="retro-checkbox">
         <input
+          disabled={disabled}
           type="checkbox"
           checked={sort?.[1] ?? false}
           onChange={() => {

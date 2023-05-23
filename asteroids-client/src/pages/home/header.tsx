@@ -1,4 +1,4 @@
-import { IntervalRangeComponent } from '../../components/interval-range'
+import { DateSearchComponent } from '../../components/date-search'
 import { SortComponent } from '../../components/sort'
 import { FavoriteButtonComponent, FavoriteButtonSize } from '../../components/favorite-button'
 import { useHome } from './hooks'
@@ -12,7 +12,8 @@ export function Header () {
     setSort,
     showFavorites,
     setShowFavorites,
-    favoritesButtonDisabled
+    favoritesButtonDisabled,
+    loading
   } = useHome()
 
   return (
@@ -32,7 +33,8 @@ export function Header () {
       </h1>
       {error != null && <h3 className="error-message">{error.message}</h3>}
       <section>
-        <IntervalRangeComponent
+        <DateSearchComponent
+          disabled={loading}
           startDateInit={date.startDate}
           endDateInit={date.endDate}
           onSubmit={({ startDate, endDate }) => {
@@ -40,6 +42,7 @@ export function Header () {
           }}
         />
         <SortComponent
+          disabled={loading}
           {...{
             sort,
             setSort
