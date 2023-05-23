@@ -10,6 +10,7 @@ export function Content () {
     toggleFavorite,
     showFavorites,
     viewMore,
+    viewMoreButtonEnabled,
     content
   } = useHome()
 
@@ -42,7 +43,7 @@ export function Content () {
             : (
               <p>No asteroids</p>
             )}
-      {content != null && content.length > 0 && (
+      {content != null && content.length > 0 && viewMoreButtonEnabled && (
         <button
           className="retro-button"
           onClick={() => {
