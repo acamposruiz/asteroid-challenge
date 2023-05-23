@@ -49,8 +49,8 @@ export function DetailPage () {
         )}
 
         <h1>
-          {name}{' '}
-          <small>
+          {name}
+          <div>
             <FavoriteButtonComponent
               isFavorite={favorites?.includes(asteroidId)}
               onClick={() => {
@@ -58,7 +58,7 @@ export function DetailPage () {
               }}
               size={FavoriteButtonSize.Big}
             />
-          </small>
+          </div>
         </h1>
       </header>
       <main>

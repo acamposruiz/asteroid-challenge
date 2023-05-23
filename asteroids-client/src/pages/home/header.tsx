@@ -20,16 +20,14 @@ export function Header () {
     <header>
       <h1>
         Asteroids{' '}
-        <small>
-          <FavoriteButtonComponent
-            disabled={favoritesButtonDisabled}
-            isFavorite={showFavorites}
-            size={FavoriteButtonSize.Big}
-            onClick={() => {
-              setShowFavorites(!showFavorites)
-            }}
-          />
-        </small>
+        <FavoriteButtonComponent
+          disabled={favoritesButtonDisabled}
+          isFavorite={showFavorites}
+          size={FavoriteButtonSize.Big}
+          onClick={() => {
+            setShowFavorites(!showFavorites)
+          }}
+        />
       </h1>
       {error != null && <h3 className="error-message">{error.message}</h3>}
       <section>

@@ -26,12 +26,10 @@ export function AsteroidComponent ({
     <article className={styles.content}>
       <h2>
         {name}
-        <small>
-          <FavoriteButtonComponent
-            isFavorite={isFavorite}
-            onClick={onFavoriteClick}
-          />
-        </small>
+        <FavoriteButtonComponent
+          isFavorite={isFavorite}
+          onClick={onFavoriteClick}
+        />
       </h2>
       <Link className={styles.link} to={asteroidPath}>
         Go detail page
