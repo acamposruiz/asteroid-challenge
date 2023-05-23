@@ -45,7 +45,7 @@ export function useDetail () {
       }
       setAsteroids(asteroids.map(asteroidItem => {
         if (asteroidItem.id === asteroidDetail.id) {
-          return asteroidDetail
+          return { ...asteroidDetail, ...asteroidItem }
         }
         return asteroidItem
       }))
