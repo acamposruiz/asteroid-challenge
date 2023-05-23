@@ -52,6 +52,7 @@ export function useHome () {
   }, [loading])
 
   const showViewMoreButton = viewMoreButtonEnabled && !loading
+  const favoritesButtonDisabled = !favoritesButtonEnabled || loading
 
   return {
     date,
@@ -64,7 +65,7 @@ export function useHome () {
     toggleFavorite,
     showFavorites,
     setShowFavorites,
-    favoritesButtonDisabled: !favoritesButtonEnabled || loading,
+    favoritesButtonDisabled,
     sortContent,
     viewMore,
     showViewMoreButton,
