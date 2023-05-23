@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDatesContext } from '../../providers/dates-provide'
 import { useSortContext } from '../../providers/sort-provide'
 import { sortAsteroids } from '../../utils/sort-asteroids'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 
+const VIEW_COUNT_INCREMENT = 7
 export function useHome () {
-  const [viewCount, setViewCount] = useState(7)
+  const [viewCount, setViewCount] = useState(VIEW_COUNT_INCREMENT)
   const [viewMoreButtonEnabled, setViewMoreButtonEnabled] = useState(false)
   const [favoritesButtonEnabled, setFavoritesButtonEnabled] = useState(false)
   const { date, setDate } = useDatesContext()
@@ -22,7 +23,7 @@ export function useHome () {
   const sortContent = useCallback(sortAsteroids(sort), [sort])
 
   const viewMore = () => {
-    setViewCount((prev) => prev + 7)
+    setViewCount((prev) => prev + VIEW_COUNT_INCREMENT)
   }
 
   const content = useMemo(() => {
@@ -53,6 +54,13 @@ export function useHome () {
 
     return sortedFavorites
   }, [favorites, showFavorites, asteroids, sortContent, viewCount])
+
+  // Reset viewCount when a new search is made
+  useEffect(() => {
+    if (!loading) {
+      setViewCount(VIEW_COUNT_INCREMENT)
+    }
+  }, [loading])
 
   return {
     date,
