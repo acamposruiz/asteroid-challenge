@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { createContext, useState, useContext, useEffect, type ReactNode } from 'react'
 import { useDatesContext } from './dates-provide'
 import { asteroidsSearchMapper } from '../mappers/asteroids-mapper'

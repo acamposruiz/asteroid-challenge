@@ -4,14 +4,14 @@ import { httpService } from '../utils/http-service'
 import { useAsteroidsContext } from './asteroids-provider'
 
 const favoritesContext = createContext<{
-  favorites: string[] | null
+  favorites: string[]
   setFavorites: (favorites: string[]) => void
   showFavorites: boolean
   setShowFavorites: (showFavorites: boolean | any) => void
 } | null>(null)
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
-  const [favorites, setFavorites] = useState<string[] | null>([])
+  const [favorites, setFavorites] = useState<string[]>([])
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const {
     asteroids
@@ -62,9 +62,6 @@ export const useFavoritesContext = () => {
   const { favorites, setFavorites, showFavorites, setShowFavorites } = context
 
   const toggleFavorite = (id: string) => {
-    if (favorites == null) {
-      return
-    }
     const isFavorite = favorites.includes(id)
     const method = isFavorite ? 'delete' : 'post'
     const url = urlConstructor({
