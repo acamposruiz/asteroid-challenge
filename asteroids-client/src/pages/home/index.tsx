@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useCallback, useMemo } from 'react'
 import { AsteroidComponent } from '../../components/asteroid-component'
 import { IntervalRangeComponent } from '../../components/interval-range'
@@ -12,16 +13,16 @@ import { FavoriteButtonComponent } from '../../components/favorite-button'
 import styles from './styles.module.css'
 
 export function HomePage () {
-  const { favorites, toggleFavorite, showFavorites, setShowFavorites } =
-    useFavoritesContext()
   const { date, setDate } = useDatesContext()
-  const { sort, setSort } = useSortContext()
-  const sortContent = useCallback(sortAsteroids(sort), [sort])
   const {
     asteroids,
     loadingSearch: loading,
     errorSearch: error
   } = useAsteroidsContext()
+  const { sort, setSort } = useSortContext()
+  const { favorites, toggleFavorite, showFavorites, setShowFavorites } =
+    useFavoritesContext()
+  const sortContent = useCallback(sortAsteroids(sort), [sort])
 
   const content = useMemo(() => {
     const filteredAsteroids =

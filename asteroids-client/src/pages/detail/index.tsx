@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { Link, useParams } from 'react-router-dom'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { FavoriteButtonComponent } from '../../components/favorite-button'
@@ -7,7 +6,7 @@ import { RowData } from '../../components/row-data'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 import { ExtraDataComponent } from './extra-data'
 
-export function AsteroidDetailPage () {
+export function DetailPage () {
   const { asteroidId } = useParams()
   const { favorites, toggleFavorite } = useFavoritesContext()
   const { detailContent, loadingDetail, errorDetail } =

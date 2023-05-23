@@ -9,9 +9,7 @@ const favoritesContext = createContext<{
   setShowFavorites: (showFavorites: boolean) => void
 } | null>(null)
 
-export const FavoritesProvider = ({ children }: {
-  children: ReactNode
-}) => {
+export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<string[] | null>([])
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
   const url = urlConstructor({

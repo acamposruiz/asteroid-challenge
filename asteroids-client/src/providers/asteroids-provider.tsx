@@ -10,7 +10,7 @@ import { type AsteroidModel } from '../models/search-models-app'
 interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
   detailContent?: AsteroidModel | null
-  fetchAsteroidDetail: (id: string) => void
+  callDetail: (id: string) => void
   loadingSearch: boolean
   loadingDetail: boolean
   errorSearch: Error | null
@@ -27,7 +27,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
   const [errorDetail, setErrorDetail] = useState<Error | null>(null)
   const { date } = useDatesContext()
 
-  const unMemorizedFetchAsteroidsSearch = async (dateParam: { startDate: string, endDate: string }) => {
+  const unMemorizedSearchAsteroids = async (dateParam: { startDate: string, endDate: string }) => {
     const queryStringSearchAPI = new URLSearchParams({
       start_date: dateParam.startDate,
       end_date: dateParam.endDate,
@@ -42,7 +42,9 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     try {
       setLoadingSearch(true)
       const { data } = await httpService.get(urlSearchAPI)
-      const asteroidsRawFlatted: AsteroidAPI[] = Object.values((data as ResponseSearchAPI).near_earth_objects).flat()
+      const asteroidsRawFlatted: AsteroidAPI[] = Object.values(
+        (data as ResponseSearchAPI).near_earth_objects
+      ).flat()
       setAsteroids(asteroidsSearchMapper(asteroidsRawFlatted))
       setErrorSearch(null)
     } catch (error: Error | any) {
@@ -53,7 +55,7 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const unMemorizedFetchAsteroidDetail = async (id: string) => {
+  const unMemorizedCallDetail = async (id: string) => {
     if (asteroids == null) {
       return
     }
@@ -72,20 +74,13 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     try {
       const { data } = await httpService.get(urlDetailAPI)
       const asteroidDetail = asteroidDetailMapper(data)
-      setAsteroids((asteroidsPrev) => {
-        console.log({ asteroidsPrev })
-
-        if (asteroidsPrev == null) {
-          return null
-        }
-        const asteroidIndex = asteroidsPrev.findIndex((asteroid) => asteroid.id === asteroidDetail.id)
-        if (asteroidIndex === -1) {
-          return asteroidsPrev
-        }
-        const newAsteroids = [...asteroidsPrev]
-        newAsteroids[asteroidIndex] = asteroidDetail
-        return newAsteroids
-      })
+      const asteroidIndex = asteroids.findIndex((asteroid) => asteroid.id === asteroidDetail.id)
+      if (asteroidIndex === -1) {
+        return asteroids
+      }
+      const newAsteroids = [...asteroids]
+      newAsteroids[asteroidIndex] = asteroidDetail
+      setAsteroids(newAsteroids)
       setErrorDetail(null)
     } catch (error: Error | any) {
       setErrorDetail(error)
@@ -94,45 +89,44 @@ export const AsteroidsProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  const fetchAsteroidsSearch = useCallback(unMemorizedFetchAsteroidsSearch, [])
-  const fetchAsteroidDetail = useCallback(unMemorizedFetchAsteroidDetail, [asteroids])
+  const searchAsteroids = useCallback(unMemorizedSearchAsteroids, [])
+  const callDetail = useCallback(unMemorizedCallDetail, [asteroids])
 
   useEffect(() => {
     setLoadingSearch(true)
-    void fetchAsteroidsSearch(date)
+    void searchAsteroids(date)
   }, [date])
 
   return (
-    <asteroidsContext.Provider value={{ asteroids, fetchAsteroidDetail, loadingSearch, loadingDetail, errorSearch, errorDetail }}>
+    <asteroidsContext.Provider
+      value={{ asteroids, callDetail, loadingSearch, loadingDetail, errorSearch, errorDetail }}
+    >
       {children}
     </asteroidsContext.Provider>
   )
 }
 
-export const useAsteroidsContext = (asteroidId?: string): AsteroidsContextProps => {
+export const useAsteroidsContext = (asteroidId?: string): Partial<AsteroidsContextProps> => {
   const context = useContext(asteroidsContext)
   if (context == null) {
     throw new Error('useAsteroidsContext must be used within an AsteroidsProvider')
   }
-  const { asteroids, fetchAsteroidDetail } = context
+  const { asteroids, callDetail, loadingSearch, loadingDetail, errorSearch, errorDetail } = context
 
   useEffect(() => {
     if (asteroidId != null) {
-      const asteroid = asteroids?.find(
-        (asteroid: AsteroidModel) => asteroid.id === asteroidId)
+      const asteroid = asteroids?.find((asteroid: AsteroidModel) => asteroid.id === asteroidId)
 
       if (asteroid?.orbitalData == null) {
-        fetchAsteroidDetail(asteroidId)
+        callDetail(asteroidId)
       }
     }
-  }, [fetchAsteroidDetail])
+  }, [callDetail])
 
   if (asteroidId != null) {
-    const detailContent = asteroids?.find(
-      (asteroid: AsteroidModel) => asteroid.id === asteroidId
-    )
-    return { ...context, detailContent }
+    const detailContent = asteroids?.find((asteroid: AsteroidModel) => asteroid.id === asteroidId)
+    return { detailContent, loadingDetail, errorDetail }
   }
 
-  return context
+  return { asteroids, loadingSearch, errorSearch }
 }
