@@ -1,20 +1,26 @@
 import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
 import { endpoints, urlConstructor } from '../utils/endpoints'
 import { httpService } from '../utils/http-service'
+import { useAsteroidsContext } from './asteroids-provider'
 
 const favoritesContext = createContext<{
   favorites: string[] | null
   setFavorites: (favorites: string[]) => void
   showFavorites: boolean
-  setShowFavorites: (showFavorites: boolean) => void
+  setShowFavorites: (showFavorites: boolean | any) => void
 } | null>(null)
 
 export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
   const [favorites, setFavorites] = useState<string[] | null>([])
   const [showFavorites, setShowFavorites] = useState<boolean>(false)
+  const {
+    asteroids
+  } = useAsteroidsContext()
+
   const url = urlConstructor({
     endpoint: endpoints.FAVORITES
   })
+
   const fetchFavorites = async () => {
     try {
       const { data } = await httpService.get(url)
@@ -23,9 +29,20 @@ export const FavoritesProvider = ({ children }: { children: ReactNode }) => {
       setFavorites([])
     }
   }
+
   useEffect(() => {
     void fetchFavorites()
   }, [])
+
+  const favoritesAsteroids =
+  favorites != null
+    ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
+    : []
+
+  if (showFavorites && favoritesAsteroids?.length === 0) {
+    setShowFavorites(() => false)
+  }
+
   return (
     <favoritesContext.Provider value={{ favorites, showFavorites, setFavorites, setShowFavorites }}>
       {children}

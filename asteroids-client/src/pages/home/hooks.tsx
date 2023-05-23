@@ -9,6 +9,7 @@ import { useFavoritesContext } from '../../providers/favorites-provider'
 export function useHome () {
   const [viewCount, setViewCount] = useState(7)
   const [viewMoreButtonEnabled, setViewMoreButtonEnabled] = useState(false)
+  const [favoritesButtonEnabled, setFavoritesButtonEnabled] = useState(false)
   const { date, setDate } = useDatesContext()
   const {
     asteroids,
@@ -25,15 +26,21 @@ export function useHome () {
   }
 
   const content = useMemo(() => {
-    const filteredAsteroids =
-      favorites != null && showFavorites
+    const favoritesAsteroids =
+      favorites != null
         ? asteroids?.filter((asteroid) => favorites.includes(asteroid.id))
-        : asteroids
+        : []
 
-    const slicedAsteroids = filteredAsteroids?.slice(0, viewCount)
+    setFavoritesButtonEnabled(
+      favoritesAsteroids != null && favoritesAsteroids.length > 0
+    )
+
+    const currentAsteroids = showFavorites ? favoritesAsteroids : asteroids
+
+    const slicedAsteroids = currentAsteroids?.slice(0, viewCount)
 
     setViewMoreButtonEnabled(
-      filteredAsteroids != null && filteredAsteroids.length > viewCount
+      currentAsteroids != null && currentAsteroids.length > viewCount
     )
 
     const sortedFavorites = slicedAsteroids?.sort(sortContent)
@@ -52,6 +59,7 @@ export function useHome () {
     toggleFavorite,
     showFavorites,
     setShowFavorites,
+    favoritesButtonEnabled,
     sortContent,
     viewMore,
     viewMoreButtonEnabled,
