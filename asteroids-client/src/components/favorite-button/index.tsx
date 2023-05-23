@@ -1,27 +1,35 @@
 import cx from 'classnames'
 import styles from './styles.module.css'
+
+export const enum FavoriteButtonSize {
+  Small,
+  Big
+}
+
+interface FavoriteButtonComponentProps {
+  isFavorite?: boolean
+  size?: FavoriteButtonSize
+  onClick: () => void
+  disabled?: boolean
+}
+
 export function FavoriteButtonComponent ({
   isFavorite = false,
-  isBig = false,
+  size = FavoriteButtonSize.Small,
   onClick,
-  enabled = true
-}: {
-  isFavorite?: boolean
-  isBig?: boolean
-  onClick: () => void
-  enabled?: boolean
-}) {
+  disabled = false
+}: FavoriteButtonComponentProps) {
   const redHeart = <span>❤️</span>
   const greenHeart = <span>💚</span>
   const disabledHeart = <span>🤍</span>
 
   return (
     <button
-      disabled={!enabled}
-      className={cx(styles.button, { [styles.big]: isBig })}
+      disabled={disabled}
+      className={cx(styles.button, { [styles.big]: size === FavoriteButtonSize.Big })}
       onClick={onClick}
     >
-      {!enabled ? disabledHeart : isFavorite ? redHeart : greenHeart}
+      {disabled ? disabledHeart : isFavorite ? redHeart : greenHeart}
     </button>
   )
 }

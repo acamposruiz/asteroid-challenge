@@ -64,7 +64,7 @@ export function useHome () {
     toggleFavorite,
     showFavorites,
     setShowFavorites,
-    favoritesButtonEnabled,
+    favoritesButtonDisabled: !favoritesButtonEnabled || loading,
     sortContent,
     viewMore,
     showViewMoreButton,

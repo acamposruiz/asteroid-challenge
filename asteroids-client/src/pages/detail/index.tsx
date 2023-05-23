@@ -56,7 +56,7 @@ export function DetailPage () {
               onClick={() => {
                 toggleFavorite(asteroidId)
               }}
-              isBig={true}
+              size={true}
             />
           </small>
         </h1>

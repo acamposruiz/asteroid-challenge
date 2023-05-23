@@ -1,6 +1,6 @@
 import { IntervalRangeComponent } from '../../components/interval-range'
 import { SortComponent } from '../../components/sort'
-import { FavoriteButtonComponent } from '../../components/favorite-button'
+import { FavoriteButtonComponent, FavoriteButtonSize } from '../../components/favorite-button'
 import { useHome } from './hooks'
 
 export function Header () {
@@ -12,8 +12,7 @@ export function Header () {
     setSort,
     showFavorites,
     setShowFavorites,
-    favoritesButtonEnabled,
-    loading
+    favoritesButtonDisabled
   } = useHome()
 
   return (
@@ -22,9 +21,9 @@ export function Header () {
         Asteroids{' '}
         <small>
           <FavoriteButtonComponent
-            enabled={favoritesButtonEnabled && !loading}
+            disabled={favoritesButtonDisabled}
             isFavorite={showFavorites}
-            isBig={true}
+            size={FavoriteButtonSize.Big}
             onClick={() => {
               setShowFavorites(!showFavorites)
             }}
