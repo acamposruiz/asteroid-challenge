@@ -12,7 +12,8 @@ export function Header () {
     setSort,
     showFavorites,
     setShowFavorites,
-    favoritesButtonEnabled
+    favoritesButtonEnabled,
+    loading
   } = useHome()
 
   return (
@@ -21,7 +22,7 @@ export function Header () {
         Asteroids{' '}
         <small>
           <FavoriteButtonComponent
-            enabled={favoritesButtonEnabled}
+            enabled={favoritesButtonEnabled && !loading}
             isFavorite={showFavorites}
             isBig={true}
             onClick={() => {

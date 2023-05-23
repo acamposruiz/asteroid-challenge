@@ -43,7 +43,7 @@ export function Content () {
             : (
               <p>No asteroids</p>
             )}
-      {content != null && content.length > 0 && viewMoreButtonEnabled && (
+      {content != null && content.length > 0 && viewMoreButtonEnabled && !loading && (
         <button
           className="retro-button"
           onClick={() => {
