@@ -6,7 +6,7 @@ import { sortAsteroids } from '../../utils/sort-asteroids'
 import { useAsteroidsContext } from '../../providers/asteroids-provider'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 
-export function useContent () {
+export function useHome () {
   const [viewCount, setViewCount] = useState(10)
   const { date, setDate } = useDatesContext()
   const {
