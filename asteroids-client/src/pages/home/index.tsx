@@ -16,8 +16,8 @@ export function HomePage () {
   const { date, setDate } = useDatesContext()
   const {
     asteroids,
-    loadingSearch: loading,
-    errorSearch: error
+    loading,
+    error
   } = useAsteroidsContext()
   const { sort, setSort } = useSortContext()
   const { favorites, toggleFavorite, showFavorites, setShowFavorites } =

@@ -1,18 +1,30 @@
-import { Link, useParams } from 'react-router-dom'
-import { useAsteroidsContext } from '../../providers/asteroids-provider'
+import { Link } from 'react-router-dom'
 import { FavoriteButtonComponent } from '../../components/favorite-button'
 import { LoadingComponent } from '../../components/loading'
 import { RowData } from '../../components/row-data'
 import { useFavoritesContext } from '../../providers/favorites-provider'
 import { ExtraDataComponent } from './extra-data'
+import { useDetail } from './hooks'
 
 export function DetailPage () {
-  const { asteroidId } = useParams()
   const { favorites, toggleFavorite } = useFavoritesContext()
-  const { detailContent, loadingDetail, errorDetail } =
-    useAsteroidsContext(asteroidId)
+  const {
+    asteroidId,
+    asteroid,
+    loading,
+    error
+  } = useDetail()
 
-  if (detailContent == null || asteroidId === undefined) {
+  if (loading) {
+    return (
+      <div>
+        <Link to="/">Back to home</Link>
+        <LoadingComponent />
+      </div>
+    )
+  }
+
+  if (asteroid == null || asteroidId === undefined) {
     return (
       <div>
         <Link to="/">Back to home</Link>
@@ -26,14 +38,14 @@ export function DetailPage () {
     isPotentiallyHazardousAsteroid,
     orbitalData,
     date
-  } = detailContent
+  } = asteroid
 
   return (
     <div>
       <header>
         <Link to="/">Back to home</Link>
-        {errorDetail != null && (
-          <h3 className="error-message">{errorDetail.message}</h3>
+        {error != null && (
+          <h3 className="error-message">{error.message}</h3>
         )}
 
         <h1>
@@ -67,13 +79,7 @@ export function DetailPage () {
             isWarning={isPotentiallyHazardousAsteroid}
           />
         </section>
-        {loadingDetail || !orbitalData
-          ? (
-            <LoadingComponent />
-          )
-          : (
-            <ExtraDataComponent orbitalData={orbitalData} />
-          )}
+        <ExtraDataComponent orbitalData={orbitalData} />
       </main>
     </div>
   )

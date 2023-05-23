@@ -2,7 +2,10 @@ import { RowData } from '../../components/row-data'
 import { type OrbitalDataModel } from '../../models/search-models-app'
 import styles from './styles.module.css'
 
-export function ExtraDataComponent ({ orbitalData }: { orbitalData: OrbitalDataModel }) {
+export function ExtraDataComponent ({ orbitalData }: { orbitalData: OrbitalDataModel | undefined }) {
+  if (orbitalData == null) {
+    return null
+  }
   const {
     orbitDeterminationDate,
     firstObservationDate,
