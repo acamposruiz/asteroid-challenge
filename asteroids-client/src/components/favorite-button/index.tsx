@@ -19,9 +19,9 @@ export function FavoriteButtonComponent ({
   onClick,
   disabled = false
 }: FavoriteButtonComponentProps) {
-  const redHeart = <span>❤️</span>
-  const greenHeart = <span>💚</span>
-  const disabledHeart = <span>🤍</span>
+  const onFavoriteIcon = <span>❤️</span>
+  const offFavoriteIcon = <span>💚</span>
+  const disabledIcon = <span>🤍</span>
 
   return (
     <button
@@ -29,7 +29,7 @@ export function FavoriteButtonComponent ({
       className={cx(styles.button, { [styles.big]: size === FavoriteButtonSize.Big })}
       onClick={onClick}
     >
-      {disabled ? disabledHeart : isFavorite ? redHeart : greenHeart}
+      {disabled ? disabledIcon : isFavorite ? onFavoriteIcon : offFavoriteIcon}
     </button>
   )
 }
