@@ -3,7 +3,7 @@ import { LoadingComponent } from '../../components/loading'
 import styles from './styles.module.css'
 import { useHome } from './hooks'
 
-export function Content () {
+export function Main () {
   const {
     loading,
     favorites,

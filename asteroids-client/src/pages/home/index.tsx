@@ -1,12 +1,12 @@
 
 import { Header } from './header'
-import { Content } from './content'
+import { Main } from './main'
 
 export function HomePage () {
   return (
     <div>
       <Header />
-      <Content />
+      <Main />
     </div>
   )
 }
