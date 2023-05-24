@@ -13,15 +13,18 @@ export function DateSearchComponent ({
   disabled = false,
   onSubmit
 }: DateSearchComponentProps) {
-  const [startDate, setStartDate] = useState(() => {
-    return startDateInit
-  })
-  const [endDate, setEndDate] = useState(() => {
-    return endDateInit
-  })
+  const [startDate, setStartDate] = useState(startDateInit)
+  const [endDate, setEndDate] = useState(endDateInit)
+
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    onSubmit({ startDate, endDate })
+  }
 
   return (
-    <div>
+    <form
+      onSubmit={submitHandler}
+    >
       <label>
                 Start date:
         <input
@@ -43,12 +46,9 @@ export function DateSearchComponent ({
       <button
         className='retro-button'
         disabled={disabled}
-        onClick={() => {
-          onSubmit({ startDate, endDate })
-        }}
       >
                 Search
       </button>
-    </div>
+    </form>
   )
 }
