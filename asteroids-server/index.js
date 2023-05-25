@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const http = require('http')
 const cors = require('cors')
@@ -100,7 +101,7 @@ app.get('/asteroids-api/:type/:id?', (request, response) => {
   })
 })
 
-const PORT = 3001
+const PORT = process.env.PORT
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
