@@ -10,12 +10,9 @@ import { API_KEY, urlConstructor } from '@/utils'
 export function useDetail () {
   const { asteroidId } = useParams()
   const { asteroids, setAsteroids } = useAsteroidsContext()
-  const [asteroid, setAsteroid] = useState<AsteroidModel | null>(() => {
-    if (asteroids == null) {
-      return null
-    }
-    return asteroids.find(asteroid => asteroid.id === asteroidId) ?? null
-  })
+  const [asteroid, setAsteroid] = useState<AsteroidModel | null>(
+    asteroids?.find((asteroid) => asteroid.id === asteroidId) ?? null
+  )
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
@@ -44,12 +41,14 @@ export function useDetail () {
       if (asteroids == null) {
         return
       }
-      setAsteroids(asteroids.map(asteroidItem => {
-        if (asteroidItem.id === asteroidDetail.id) {
-          return { ...asteroidDetail, ...asteroidItem }
-        }
-        return asteroidItem
-      }))
+      setAsteroids(
+        asteroids.map((asteroidItem) => {
+          if (asteroidItem.id === asteroidDetail.id) {
+            return { ...asteroidDetail, ...asteroidItem }
+          }
+          return asteroidItem
+        })
+      )
     } catch (error: Error | any) {
       setError(error)
     } finally {
