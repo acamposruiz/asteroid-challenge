@@ -7,19 +7,19 @@ export const enum FavoriteButtonSize {
   Big
 }
 
-interface FavoriteButtonComponentProps {
+interface FavoriteButtonProps {
   isFavorite?: boolean
   size?: FavoriteButtonSize
   onClick: () => void
   disabled?: boolean
 }
 
-export function FavoriteButtonComponent ({
+export function FavoriteButton ({
   isFavorite = false,
   size = FavoriteButtonSize.Small,
   onClick,
   disabled = false
-}: FavoriteButtonComponentProps) {
+}: FavoriteButtonProps) {
   const onFavoriteIcon = <span>❤️</span>
   const offFavoriteIcon = <span>💚</span>
   const disabledIcon = <span>🤍</span>

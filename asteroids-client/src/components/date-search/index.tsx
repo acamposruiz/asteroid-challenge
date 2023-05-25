@@ -7,7 +7,7 @@ interface DateSearchComponentProps {
   onSubmit: ({ startDate, endDate }: { startDate: string, endDate: string }) => void
 }
 
-export function DateSearchComponent ({
+export function DateSearch ({
   startDateInit,
   endDateInit,
   disabled = false,

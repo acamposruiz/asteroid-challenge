@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { FavoriteButtonComponent, RowData } from '@/components'
+import { FavoriteButton, RowData } from '@/components'
 
 import styles from './styles.module.css'
 
@@ -13,7 +13,7 @@ interface AsteroidComponentProps {
   isFavorite: boolean | undefined
   onFavoriteClick: () => void
 }
-export function AsteroidComponent ({
+export function AsteroidItemList ({
   id: asteroidId,
   name,
   date,
@@ -27,7 +27,7 @@ export function AsteroidComponent ({
     <article className={styles.content}>
       <h2>
         {name}
-        <FavoriteButtonComponent isFavorite={isFavorite} onClick={onFavoriteClick} />
+        <FavoriteButton isFavorite={isFavorite} onClick={onFavoriteClick} />
       </h2>
       <Link className={styles.link} to={asteroidPath}>
         Go detail page

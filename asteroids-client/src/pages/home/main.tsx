@@ -1,4 +1,4 @@
-import { AsteroidComponent, LoadingComponent } from '@/components'
+import { AsteroidItemList, Loading } from '@/components'
 
 import { useHome } from './hooks'
 import styles from './styles.module.css'
@@ -20,14 +20,14 @@ export function Main () {
     <main>
       {loading
         ? (
-          <LoadingComponent />
+          <Loading />
         )
         : showContent
           ? (
             <ul>
               {content.map((asteroid) => (
                 <li className={styles.item} key={asteroid.id}>
-                  <AsteroidComponent
+                  <AsteroidItemList
                     {...asteroid}
                     isFavorite={favorites?.includes(asteroid.id)}
                     onFavoriteClick={() => {

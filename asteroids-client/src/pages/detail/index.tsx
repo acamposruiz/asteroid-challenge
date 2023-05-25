@@ -1,46 +1,55 @@
 import { Link } from 'react-router-dom'
 
 import {
-  FavoriteButtonComponent, FavoriteButtonSize, LoadingComponent, RowData
+  FavoriteButton,
+  FavoriteButtonSize,
+  Loading,
+  RowData,
+  Minimal
 } from '@/components'
 import { useFavoritesContext } from '@/providers'
 
-import { ExtraDataComponent } from './extra-data'
+import { ExtraData } from './components/extra-data'
 import { useDetail } from './hooks'
 
 export function DetailPage () {
   const { favorites, toggleFavorite } = useFavoritesContext()
   const { asteroidId, asteroid, loading, error } = useDetail()
 
+  if (error) {
+    return (
+      <Minimal>
+        <h3 className="error-message">{error.message}</h3>
+      </Minimal>
+    )
+  }
+
   if (loading) {
     return (
-      <div>
-        <Link to="/">Back to home</Link>
-        <LoadingComponent />
-      </div>
+      <Minimal>
+        <Loading />
+      </Minimal>
     )
   }
 
   if (asteroid == null || asteroidId === undefined) {
     return (
-      <div>
-        <Link to="/">Back to home</Link>
+      <Minimal>
         <p>Asteroid not found</p>
-      </div>
+      </Minimal>
     )
   }
+
   const { name, estimatedDiameter, isPotentiallyHazardousAsteroid, orbitalData, date } = asteroid
 
   return (
     <div>
       <header>
         <Link to="/">Back to home</Link>
-        {error != null && <h3 className="error-message">{error.message}</h3>}
-
         <h1>
           {name}
           <div>
-            <FavoriteButtonComponent
+            <FavoriteButton
               isFavorite={favorites?.includes(asteroidId)}
               onClick={() => {
                 toggleFavorite(asteroidId)
@@ -65,7 +74,7 @@ export function DetailPage () {
             isWarning={isPotentiallyHazardousAsteroid}
           />
         </section>
-        <ExtraDataComponent orbitalData={orbitalData} />
+        <ExtraData orbitalData={orbitalData} />
       </main>
     </div>
   )

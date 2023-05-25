@@ -3,7 +3,7 @@ import { type OrbitalDataModel } from '@/models'
 
 import styles from './styles.module.css'
 
-export function ExtraDataComponent ({ orbitalData }: { orbitalData: OrbitalDataModel | undefined }) {
+export function ExtraData ({ orbitalData }: { orbitalData: OrbitalDataModel | undefined }) {
   if (orbitalData == null) {
     return null
   }

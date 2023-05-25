@@ -1,5 +1,5 @@
 import {
-  DateSearchComponent, FavoriteButtonComponent, FavoriteButtonSize, SortComponent
+  DateSearch, FavoriteButton, FavoriteButtonSize, Sort
 } from '@/components'
 
 import { useHome } from './hooks'
@@ -21,7 +21,7 @@ export function Header () {
     <header>
       <h1>
         Asteroids{' '}
-        <FavoriteButtonComponent
+        <FavoriteButton
           disabled={favoritesButtonDisabled}
           isFavorite={showFavorites}
           size={FavoriteButtonSize.Big}
@@ -32,7 +32,7 @@ export function Header () {
       </h1>
       {error != null && <h3 className="error-message">{error.message}</h3>}
       <section>
-        <DateSearchComponent
+        <DateSearch
           disabled={loading}
           startDateInit={date.startDate}
           endDateInit={date.endDate}
@@ -40,7 +40,7 @@ export function Header () {
             setDate({ startDate, endDate })
           }}
         />
-        <SortComponent
+        <Sort
           disabled={loading}
           {...{
             sort,

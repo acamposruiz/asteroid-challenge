@@ -5,7 +5,7 @@ interface SortComponentProps {
   setSort: (sort: [keyof AsteroidModel, boolean] | null) => void
   disabled?: boolean
 }
-export function SortComponent ({
+export function Sort ({
   sort,
   setSort,
   disabled = false
