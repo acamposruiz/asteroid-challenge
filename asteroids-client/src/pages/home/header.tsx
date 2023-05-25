@@ -3,7 +3,7 @@ import {
   SortComponent,
   FavoriteButtonComponent,
   FavoriteButtonSize
-} from '../../components'
+} from '@/components'
 import { useHome } from './hooks'
 
 export function Header () {

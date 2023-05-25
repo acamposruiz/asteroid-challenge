@@ -1,4 +1,4 @@
-import { type ResponseDetailAPI, type AsteroidAPI, type AsteroidModel } from '../models'
+import { type ResponseDetailAPI, type AsteroidAPI, type AsteroidModel } from '@/models'
 
 export const asteroidsSearchMapper = (asteroids: AsteroidAPI[]): AsteroidModel[] => {
   return asteroids.map((asteroid) => ({

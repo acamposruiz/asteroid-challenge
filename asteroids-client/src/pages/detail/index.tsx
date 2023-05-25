@@ -4,8 +4,8 @@ import {
   FavoriteButtonSize,
   LoadingComponent,
   RowData
-} from '../../components'
-import { useFavoritesContext } from '../../providers'
+} from '@/components'
+import { useFavoritesContext } from '@/providers'
 import { ExtraDataComponent } from './extra-data'
 import { useDetail } from './hooks'
 

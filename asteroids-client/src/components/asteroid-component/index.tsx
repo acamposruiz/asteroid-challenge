@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
-import { FavoriteButtonComponent } from '../favorite-button'
+import { FavoriteButtonComponent, RowData } from '@/components'
 import styles from './styles.module.css'
-import { RowData } from '../row-data'
 
 interface AsteroidComponentProps {
   id: string
@@ -26,19 +25,13 @@ export function AsteroidComponent ({
     <article className={styles.content}>
       <h2>
         {name}
-        <FavoriteButtonComponent
-          isFavorite={isFavorite}
-          onClick={onFavoriteClick}
-        />
+        <FavoriteButtonComponent isFavorite={isFavorite} onClick={onFavoriteClick} />
       </h2>
       <Link className={styles.link} to={asteroidPath}>
         Go detail page
       </Link>
       <RowData title="Date" value={date} />
-      <RowData
-        title="Estimated diameter"
-        value={`${estimatedDiameter} meters`}
-      />
+      <RowData title="Estimated diameter" value={`${estimatedDiameter} meters`} />
       <RowData
         title="Potentially hazardous"
         isWarning={isPotentiallyHazardousAsteroid}

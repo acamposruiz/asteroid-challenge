@@ -1,5 +1,5 @@
 import { type ReactNode, createContext, useState, useContext } from 'react'
-import { type AsteroidModel } from '../models'
+import { type AsteroidModel } from '@/models'
 
 export interface SortContext {
   sort: [keyof AsteroidModel, boolean] | null

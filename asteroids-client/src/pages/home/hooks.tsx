@@ -5,8 +5,8 @@ import {
   useAsteroidsContext,
   useFavoritesContext,
   useSortContext
-} from '../../providers'
-import { sortAsteroids } from '../../utils'
+} from '@/providers'
+import { sortAsteroids } from '@/utils'
 
 const VIEW_COUNT_INCREMENT = 7
 export function useHome () {
