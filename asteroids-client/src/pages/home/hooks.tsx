@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useCallback, useEffect, useMemo, useState } from 'react'
+
 import {
-  useDatesContext,
-  useAsteroidsContext,
-  useFavoritesContext,
-  useSortContext
+  useAsteroidsContext, useDatesContext, useFavoritesContext, useSortContext
 } from '@/providers'
 import { sortAsteroids } from '@/utils'
 

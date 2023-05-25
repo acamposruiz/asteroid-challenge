@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
+
 import {
-  FavoriteButtonComponent,
-  FavoriteButtonSize,
-  LoadingComponent,
-  RowData
+  FavoriteButtonComponent, FavoriteButtonSize, LoadingComponent, RowData
 } from '@/components'
 import { useFavoritesContext } from '@/providers'
+
 import { ExtraDataComponent } from './extra-data'
 import { useDetail } from './hooks'
 

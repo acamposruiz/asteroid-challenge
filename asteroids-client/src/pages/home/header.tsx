@@ -1,9 +1,7 @@
 import {
-  DateSearchComponent,
-  SortComponent,
-  FavoriteButtonComponent,
-  FavoriteButtonSize
+  DateSearchComponent, FavoriteButtonComponent, FavoriteButtonSize, SortComponent
 } from '@/components'
+
 import { useHome } from './hooks'
 
 export function Header () {

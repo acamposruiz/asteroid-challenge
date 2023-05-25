@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { type AsteroidModel } from '@/models'
+import { useParams } from 'react-router-dom'
+
 import { endpoints, httpService } from '@/core'
-import { urlConstructor, API_KEY } from '@/utils'
 import { asteroidDetailMapper } from '@/mappers'
+import { type AsteroidModel } from '@/models'
 import { useAsteroidsContext } from '@/providers'
+import { API_KEY, urlConstructor } from '@/utils'
 
 export function useDetail () {
   const { asteroidId } = useParams()

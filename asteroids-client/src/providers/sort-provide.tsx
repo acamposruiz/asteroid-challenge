@@ -1,4 +1,5 @@
-import { type ReactNode, createContext, useState, useContext } from 'react'
+import { createContext, type ReactNode, useContext, useState } from 'react'
+
 import { type AsteroidModel } from '@/models'
 
 export interface SortContext {

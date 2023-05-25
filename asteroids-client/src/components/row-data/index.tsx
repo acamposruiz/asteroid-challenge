@@ -1,4 +1,5 @@
 import cx from 'classnames'
+
 import styles from './styles.module.css'
 
 export const RowData = ({

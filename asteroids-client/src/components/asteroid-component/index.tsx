@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
+
 import { FavoriteButtonComponent, RowData } from '@/components'
+
 import styles from './styles.module.css'
 
 interface AsteroidComponentProps {
