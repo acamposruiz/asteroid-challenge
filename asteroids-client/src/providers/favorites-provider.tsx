@@ -1,8 +1,7 @@
 import { type ReactNode, createContext, useState, useContext, useEffect } from 'react'
-import { endpoints } from '../core/endpoints'
-import { httpService } from '../core/http-service'
+import { endpoints, httpService } from '../core'
 import { useAsteroidsContext } from './asteroids-provider'
-import { urlConstructor } from '../utils/url-constructor'
+import { urlConstructor } from '../utils'
 
 const favoritesContext = createContext<{
   favorites: string[]

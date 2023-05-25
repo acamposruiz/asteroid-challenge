@@ -1,4 +1,4 @@
-import { type AsteroidModel } from '../../models/search-models-app'
+import { type AsteroidModel } from '../../models'
 
 interface SortComponentProps {
   sort: [keyof AsteroidModel, boolean] | null

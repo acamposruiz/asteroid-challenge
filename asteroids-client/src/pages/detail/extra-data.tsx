@@ -1,5 +1,5 @@
-import { RowData } from '../../components/row-data'
-import { type OrbitalDataModel } from '../../models/search-models-app'
+import { RowData } from '../../components'
+import { type OrbitalDataModel } from '../../models'
 import styles from './styles.module.css'
 
 export function ExtraDataComponent ({ orbitalData }: { orbitalData: OrbitalDataModel | undefined }) {

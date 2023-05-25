@@ -1,19 +1,17 @@
 import { Link } from 'react-router-dom'
-import { FavoriteButtonComponent, FavoriteButtonSize } from '../../components/favorite-button'
-import { LoadingComponent } from '../../components/loading'
-import { RowData } from '../../components/row-data'
-import { useFavoritesContext } from '../../providers/favorites-provider'
+import {
+  FavoriteButtonComponent,
+  FavoriteButtonSize,
+  LoadingComponent,
+  RowData
+} from '../../components'
+import { useFavoritesContext } from '../../providers'
 import { ExtraDataComponent } from './extra-data'
 import { useDetail } from './hooks'
 
 export function DetailPage () {
   const { favorites, toggleFavorite } = useFavoritesContext()
-  const {
-    asteroidId,
-    asteroid,
-    loading,
-    error
-  } = useDetail()
+  const { asteroidId, asteroid, loading, error } = useDetail()
 
   if (loading) {
     return (
@@ -32,21 +30,13 @@ export function DetailPage () {
       </div>
     )
   }
-  const {
-    name,
-    estimatedDiameter,
-    isPotentiallyHazardousAsteroid,
-    orbitalData,
-    date
-  } = asteroid
+  const { name, estimatedDiameter, isPotentiallyHazardousAsteroid, orbitalData, date } = asteroid
 
   return (
     <div>
       <header>
         <Link to="/">Back to home</Link>
-        {error != null && (
-          <h3 className="error-message">{error.message}</h3>
-        )}
+        {error != null && <h3 className="error-message">{error.message}</h3>}
 
         <h1>
           {name}
@@ -65,10 +55,7 @@ export function DetailPage () {
         <section>
           <h3>General data</h3>
           <RowData title="Date" value={date} />
-          <RowData
-            title="Estimated diameter"
-            value={estimatedDiameter}
-          />
+          <RowData title="Estimated diameter" value={estimatedDiameter} />
           <RowData
             title="Potentially hazardous"
             value={

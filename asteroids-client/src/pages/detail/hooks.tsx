@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { type AsteroidModel } from '../../models/search-models-app'
-import { endpoints } from '../../core/endpoints'
-import { urlConstructor, API_KEY } from '../../utils/url-constructor'
-import { httpService } from '../../core/http-service'
-import { asteroidDetailMapper } from '../../mappers/asteroids-mapper'
-import { useAsteroidsContext } from '../../providers/asteroids-provider'
+import { type AsteroidModel } from '../../models'
+import { endpoints, httpService } from '../../core'
+import { urlConstructor, API_KEY } from '../../utils'
+import { asteroidDetailMapper } from '../../mappers'
+import { useAsteroidsContext } from '../../providers'
 
 export function useDetail () {
   const { asteroidId } = useParams()

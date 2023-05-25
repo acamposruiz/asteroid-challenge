@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDatesContext } from '../../providers/dates-provide'
-import { useSortContext } from '../../providers/sort-provide'
-import { sortAsteroids } from '../../utils/sort-asteroids'
-import { useAsteroidsContext } from '../../providers/asteroids-provider'
-import { useFavoritesContext } from '../../providers/favorites-provider'
+import {
+  useDatesContext,
+  useAsteroidsContext,
+  useFavoritesContext,
+  useSortContext
+} from '../../providers'
+import { sortAsteroids } from '../../utils'
 
 const VIEW_COUNT_INCREMENT = 7
 export function useHome () {

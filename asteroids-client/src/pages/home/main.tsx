@@ -1,5 +1,4 @@
-import { AsteroidComponent } from '../../components/asteroid-component'
-import { LoadingComponent } from '../../components/loading'
+import { AsteroidComponent, LoadingComponent } from '../../components'
 import styles from './styles.module.css'
 import { useHome } from './hooks'
 

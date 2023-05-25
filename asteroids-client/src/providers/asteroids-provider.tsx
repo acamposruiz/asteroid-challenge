@@ -1,10 +1,9 @@
 import { createContext, useState, useContext, useEffect, type ReactNode } from 'react'
 import { useDatesContext } from './dates-provide'
-import { asteroidsSearchMapper } from '../mappers/asteroids-mapper'
-import { API_KEY, endpoints, urlConstructor } from '../core/endpoints'
-import { httpService } from '../core/http-service'
-import { type ResponseSearchAPI, type AsteroidAPI } from '../models/search-models-api'
-import { type AsteroidModel } from '../models/search-models-app'
+import { asteroidsSearchMapper } from '../mappers'
+import { endpoints, httpService } from '../core'
+import { type ResponseSearchAPI, type AsteroidAPI, type AsteroidModel } from '../models'
+import { API_KEY, urlConstructor } from '../utils'
 
 interface AsteroidsContextProps {
   asteroids: AsteroidModel[] | null
