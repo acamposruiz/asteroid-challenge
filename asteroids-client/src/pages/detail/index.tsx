@@ -14,7 +14,7 @@ import { useDetail } from './hooks'
 
 export function DetailPage () {
   const { favorites, toggleFavorite } = useFavoritesContext()
-  const { asteroidId, asteroid, loading, error } = useDetail()
+  const { asteroid, loading, error } = useDetail()
 
   if (error) {
     return (
@@ -32,7 +32,7 @@ export function DetailPage () {
     )
   }
 
-  if (asteroid == null || asteroidId === undefined) {
+  if (asteroid == null) {
     return (
       <Minimal>
         <p>Asteroid not found</p>
@@ -50,9 +50,9 @@ export function DetailPage () {
           {name}
           <div>
             <FavoriteButton
-              isFavorite={favorites?.includes(asteroidId)}
+              isFavorite={favorites?.includes(asteroid.id)}
               onClick={() => {
-                toggleFavorite(asteroidId)
+                toggleFavorite(asteroid.id)
               }}
               size={FavoriteButtonSize.Big}
             />

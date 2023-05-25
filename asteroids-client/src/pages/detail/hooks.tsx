@@ -65,7 +65,6 @@ export function useDetail () {
   }, [])
 
   return {
-    asteroidId,
     asteroid,
     loading,
     error
