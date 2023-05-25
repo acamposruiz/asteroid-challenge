@@ -1,5 +1,5 @@
-const HOST = 'localhost:3001'
-export const API_KEY = 'ejeG5zIpLfN7belXBAlZx6vElO0ch5CdlKhldP4h'
+export const API_KEY = import.meta.env.VITE_API_KEY as string
+const HOST = import.meta.env.VITE_HOST as string
 
 export const urlConstructor = ({
   endpoint,
