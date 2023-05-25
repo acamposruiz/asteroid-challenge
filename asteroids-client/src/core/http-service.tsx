@@ -7,9 +7,11 @@ export const httpService = {
       if (delegateWrongResponseRedirection) {
         if (response.status === 404) {
           window.location.href = CLIENT_PATHS.NOT_FOUND
+          return { data: null, response }
         }
         if (response.status === 500) {
           window.location.href = CLIENT_PATHS.ERROR
+          return { data: null, response }
         }
       }
       const data = await response.json()

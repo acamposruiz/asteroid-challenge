@@ -16,7 +16,7 @@ export function DetailPage () {
   const { favorites, toggleFavorite } = useFavoritesContext()
   const { asteroid, loading, error } = useDetail()
 
-  if (error) {
+  if (error?.message) {
     return (
       <Minimal>
         <h3 className="error-message">{error.message}</h3>
@@ -33,11 +33,7 @@ export function DetailPage () {
   }
 
   if (asteroid == null) {
-    return (
-      <Minimal>
-        <p>Asteroid not found</p>
-      </Minimal>
-    )
+    return null
   }
 
   const { name, estimatedDiameter, isPotentiallyHazardousAsteroid, orbitalData, date } = asteroid

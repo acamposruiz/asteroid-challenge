@@ -35,6 +35,9 @@ export function useDetail () {
 
     try {
       const { data } = await httpService.get(detailUrl, true)
+      if (data == null) {
+        return
+      }
       const asteroidDetail = asteroidDetailMapper(data)
       setAsteroid(asteroidDetail)
       setError(null)
