@@ -1,5 +1,5 @@
 import './App.css'
-import { AppRouter } from './app-router.tsx'
+import { AppRouter } from './core/app-router.tsx'
 
 export const App = () => {
   return (

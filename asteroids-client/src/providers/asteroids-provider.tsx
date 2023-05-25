@@ -1,8 +1,8 @@
 import { createContext, useState, useContext, useEffect, type ReactNode } from 'react'
 import { useDatesContext } from './dates-provide'
 import { asteroidsSearchMapper } from '../mappers/asteroids-mapper'
-import { API_KEY, endpoints, urlConstructor } from '../utils/endpoints'
-import { httpService } from '../utils/http-service'
+import { API_KEY, endpoints, urlConstructor } from '../core/endpoints'
+import { httpService } from '../core/http-service'
 import { type ResponseSearchAPI, type AsteroidAPI } from '../models/search-models-api'
 import { type AsteroidModel } from '../models/search-models-app'
 
