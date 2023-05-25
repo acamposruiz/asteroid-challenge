@@ -1,4 +1,5 @@
 import './App.css'
+
 import { AppRouter } from './core'
 
 export const App = () => {

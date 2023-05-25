@@ -1,8 +1,10 @@
+import './index.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import { WrapperProvider } from './providers'
+
 import { App } from './App.tsx'
+import { WrapperProvider } from './providers'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
