@@ -1,4 +1,3 @@
-// config globals aliases
 {
   "compilerOptions": {
     "target": "ESNext",
